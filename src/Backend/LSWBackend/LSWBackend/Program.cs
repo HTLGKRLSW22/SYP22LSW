@@ -11,12 +11,14 @@ builder.Services.AddCors(options => options.AddPolicy(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-string connectionString = builder.Configuration.GetConnectionString("LSWDb_Relative");
+string connectionString = builder.Configuration.GetConnectionString("LSWDb");
 string location = System.Reflection.Assembly.GetEntryAssembly()!.Location;
 string dataDirectory = Path.GetDirectoryName(location)!;
 connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + Path.DirectorySeparatorChar);
-builder.Services.AddDbContext<LSWContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<LSWContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddHostedService<DatabaseBackgroundService>();
+
+//Configure your services here
 
 #endregion
 

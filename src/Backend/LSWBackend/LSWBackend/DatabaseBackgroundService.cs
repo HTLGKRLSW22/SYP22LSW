@@ -13,6 +13,7 @@ namespace LSWBackend
             using IServiceScope scope = _serviceProvider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<LSWContext>();
             db.Database.EnsureCreated();
+            Console.WriteLine("Database created...");
             return Task.Run(() => { });
         }
     }
