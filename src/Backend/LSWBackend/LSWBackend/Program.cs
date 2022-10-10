@@ -16,6 +16,7 @@ string location = System.Reflection.Assembly.GetEntryAssembly()!.Location;
 string dataDirectory = Path.GetDirectoryName(location)!;
 connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + Path.DirectorySeparatorChar);
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddScoped<OfferService>();
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
 #endregion
