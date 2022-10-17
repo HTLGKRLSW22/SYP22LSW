@@ -19,6 +19,8 @@ builder.Services.AddDbContext<LSWContext>(options => options.UseSqlite(connectio
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
 //Configure your services here
+builder.Services.AddScoped<CoursesService>();
+builder.Services.AddScoped<WaitingListsService>();
 
 #endregion
 
