@@ -8,6 +8,7 @@ builder.Services.AddCors(options => options.AddPolicy(
     corsKey,
     x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
   ));
+builder.Services.AddScoped<FreistellungsService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
