@@ -10,9 +10,9 @@ namespace LSWBackend.Controllers
         static HttpClient client = new HttpClient();
         OfferService _service;
 
-        public AuthenticationController()
+        public AuthenticationController(OfferService service)
         {
-            this._service = new OfferService();
+            this._service = service;
         }
 
         [HttpGet("login")]

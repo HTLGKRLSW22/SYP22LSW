@@ -43,5 +43,11 @@ namespace LSWBackend.Controllers
             return Ok(offerDto);
         }
 
+        [HttpGet("GetCourse")]
+        public ActionResult<OfferDto> GetCourse()
+        {
+            return Ok(_service.GetCourse());
+        }
+
     }
 }

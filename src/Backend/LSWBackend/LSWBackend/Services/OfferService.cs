@@ -2,20 +2,21 @@
 {
     public class OfferService
     {
-        public OfferService(/*DbContext db*/)
+        private LSWContext _db;
+        public OfferService(LSWContext db)
         {
-            //this.db = db;
+            this._db = db;
         }
 
         public bool DeleteCourse(out string errorMsg, int courseId)
         {
-            //if (db.Courses.Where(x => x.CourseId == courseId).Count() == 0)
-            //{
-            //  errorMsg = $"No Course found with id: {courseId}";
-            //  return false;    
-            //}
-            //db.Courses.Remove(db.Courses.Single(x => x.CourseId == courseId));
-            //db.SaveChanges();
+            if (_db.Offers.Where(x => x.CourseId == courseId).Count() == 0)
+            {
+             errorMsg = $"No Course found with id: {courseId}";
+             return false;    
+            }
+            _db.Courses.Remove(_db.Courses.Single(x => x.CourseId == courseId));
+            _db.SaveChanges();
             errorMsg = "Success";
             return true;
         }
@@ -78,6 +79,15 @@
             }
         }
 
+        public List<Offer> GetCourse()
+        {
+            return _db.Offers.ToList();
+        }
+
+        public List<Student> GetStudent()
+        {
+            return _db.Students.ToList();
+        }
 
         #region WaitingList
 
@@ -95,7 +105,6 @@
             //db.SaveChanges();
             //return student;
         }
-
 
         #endregion
     }
