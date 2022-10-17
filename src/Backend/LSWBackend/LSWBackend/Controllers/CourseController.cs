@@ -43,7 +43,5 @@ namespace LSWBackend.Controllers
             return Ok(offerDto);
         }
 
-        
-
     }
 }
