@@ -18,6 +18,8 @@ connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + P
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
+builder.Services.AddScoped<EmailSenderService>();
+
 #endregion
 
 var app = builder.Build();
