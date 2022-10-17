@@ -18,7 +18,7 @@ connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + P
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
-builder.Services.AddScoped<EmailSenderService>();
+builder.Services.AddScoped<EmailSenderService>().AddScoped<SendEmailsService>();
 
 #endregion
 
@@ -52,3 +52,4 @@ app.MapControllers();
 #endregion
 
 app.Run();
+
