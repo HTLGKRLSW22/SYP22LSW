@@ -1,4 +1,4 @@
-namespace ChinookPlaylists;
+namespace LSWBackend;
 
 public static class ExtensionMethods
 {
