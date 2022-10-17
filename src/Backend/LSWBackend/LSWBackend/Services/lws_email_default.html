@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap">
+
+    <style>
+        html {
+            font-family: 'Inter';
+            height: 100%;
+            display: flex;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        body {
+            margin: 0;
+            margin: auto;
+            height: 100%;
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #0063AB;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .img {
+            max-width: fit-content;
+            align-self: center;
+        }
+
+        .footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin: auto;
+        }
+
+        .footerContent {
+            margin: 5px;
+            font-size: smaller;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            margin-top: 5%;
+        }
+
+        .headline {
+            font-weight: 700;
+            margin-bottom: 0px;
+        }
+
+        .link a,
+        a:hover,
+        a:visited,
+        a:active {
+            color: gray;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<table>
+    <tr>
+        <td style="text-align: center; width: 50%;">
+
+            <body>
+                <header>
+                    <img src='https://www.htl-grieskirchen.net/fileadmin/bilder/logo.png' class="img" alt='htl-logo'>
+                    <img src='https://www.htl-grieskirchen.net/fileadmin/bilder/schule.png' class="img"
+                        alt='htl-building'>
+                </header>
+
+                <h1>$$TITLE</h1>
+                <p>$$CONTENT
+                </p>
+
+                <div class="footer">
+                    <div class="footerContent">
+                        <p class="headline">HTBLA Grieskirchen</p>
+                        <p class="subline">Parzer Schulstraße 1, 4710 Grieskirchen</p>
+                        <a href="https://www.htl-grieskirchen.net" class="link">htl-grieskirchen.net</a>
+                    </div>
+                </div>
+            </body>
+        </td>
+    </tr>
+</table>
+
+
+</html>
