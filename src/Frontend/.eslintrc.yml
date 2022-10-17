@@ -19,8 +19,25 @@ rules:
     - error
     - windows
   quotes:
-    - error
+    - 2
     - single
-  semi:
-    - error
-    - always
+  eqeqeq: 2
+  comma-dangle:
+    - 2
+    - arrays: only-multiline
+      objects: only-multiline
+      functions: only-multiline
+  no-console: 0
+  no-debugger: 1
+  no-extra-semi: 1
+  no-extra-parens: 1
+  no-irregular-whitespace: 0
+  no-undef: 2
+  no-unused-vars: 0
+  semi: 1
+  semi-spacing: 1
+  valid-jsdoc:
+    - 2
+    - requireReturn: false
+  "@angular-eslint/no-input-rename": 0
+  "@angular-eslint/no-output-rename": 0
