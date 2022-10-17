@@ -14,4 +14,13 @@
     <ProjectReference Include="..\LSWDbLib\LSWDbLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Services\lws_email_default.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\lws_email_warning.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
