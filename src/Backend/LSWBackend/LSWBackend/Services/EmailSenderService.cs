@@ -7,9 +7,9 @@ namespace LSWBackend.Services
     {
         public SmtpClient SenderClient { get; set; } = new SmtpClient();
 
-        private string smtpServer = "smtp.gmail.com";
-        private string senderMailAddress = "TODO";
-        private string senderMailPw = "TODO";
+        private string smtpServer = "smtp-mail.outlook.com";
+        private string senderMailAddress = "lsw-htlgrieskirchen@outlook.com";
+        private string senderMailPw = "SYP2022LSW";
 
         public EmailSenderService()
         {
