@@ -6,29 +6,27 @@
     "Frontend": {
       "projectType": "application",
       "schematics": {
-        "schematics": {
-          "@schematics/angular:component": {
-            "style": "scss",
-            "skipTests": true
-          },
-          "@schematics/angular:class": {
-            "skipTests": true
-          },
-          "@schematics/angular:directive": {
-            "skipTests": true
-          },
-          "@schematics/angular:guard": {
-            "skipTests": true
-          },
-          "@schematics/angular:interceptor": {
-            "skipTests": true
-          },
-          "@schematics/angular:pipe": {
-            "skipTests": true
-          },
-          "@schematics/angular:service": {
-            "skipTests": true
-          }
+        "@schematics/angular:component": {
+          "style": "scss",
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
         }
       },
       "root": "",
@@ -49,9 +47,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "./node_modules/@popperjs/core/dist/umd/popper.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -117,9 +119,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "./node_modules/@popperjs/core/dist/umd/popper.min.js"
+            ]
           }
         },
         "lint": {
@@ -137,7 +143,6 @@
   "cli": {
     "schematicCollections": [
       "@angular-eslint/schematics"
-    ],
-    "analytics": false
+    ]
   }
 }
