@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,17 @@ export class AuthService {
 
   constructor(private http:HttpClient) { }
 
-  public loginWithCredentials(username:string, password:string):Observable<AuthDto> {
+  public loginWithCredentials(username:string, password:string, saveCredentials:boolean):Observable<AuthDto> {
     console.log(`AuthService::loginWithCredentials ${username}`);
     return this.http.post<AuthDto>(`${this.baseUrl}/`, {
       username: username, password: password
-    });
+    }).pipe(
+      tap(user => {
+        if (user && user.token && saveCredentials) {
+          sessionStorage.setItem('userToken', JSON.stringify(user));
+        }
+      })
+    )
   }
+
 }
