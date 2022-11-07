@@ -27,7 +27,7 @@ namespace LSWBackend.Controllers
             if (authorizedTeacherId != offerDto.TeacherId) return Unauthorized($"Teacher with id {authorizedTeacherId} is not the owner of course {id}!");
             if (id < 0 || offerDto == null) return BadRequest("Id or request body incorrect");
             var replyOffer = _service.EditCourse(id, offerDto);
-            if (replyOffer == new Offer()) return BadRequest("No offer with provided id found");
+            if (replyOffer == new Offer()) return NotFound("No offer with provided id found");
             return Ok(new OfferDto().CopyPropertiesFrom(replyOffer));
         }
 
