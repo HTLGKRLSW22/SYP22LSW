@@ -14,7 +14,7 @@ namespace LSWBackend.Services
         {
             try
             {
-                credentials = File.ReadAllLines("Services/lws_email_default.html");
+                credentials = File.ReadAllLines("Services/Email.txt");
                 SenderClient = new SmtpClient(smtpServer)
                 {
                     Port = 587,
