@@ -11,16 +11,15 @@ builder.Services.AddCors(options => options.AddPolicy(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-string connectionString = builder.Configuration.GetConnectionString("LSWDb");
+string connectionString = builder.Configuration.GetConnectionString("LSWDb_Relative");
 string location = System.Reflection.Assembly.GetEntryAssembly()!.Location;
 string dataDirectory = Path.GetDirectoryName(location)!;
 connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + Path.DirectorySeparatorChar);
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
-builder.Services.AddScoped<EmailSenderService>().AddScoped<SendEmailsService>();
-
 builder.Services.AddScoped<StudentsService>();
+builder.Services.AddScoped<SendEmailsService>();
 builder.Services.AddScoped<EmailSenderService>();
 builder.Services.AddScoped<NoCourseNotifierService>();
 
