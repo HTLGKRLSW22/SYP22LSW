@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace LSWDbLib;
 
-namespace LSWDbLib
+public class Clazz
 {
-    public class Clazz
-    {
-        public int ClazzId { get; set; }
-        public string ClazzName { get; set; }
-        public int? TeacherId { get; set; }
+    public int ClazzId { get; set; }
+    public string ClazzName { get; set; } = null!;
+    public int? TeacherId { get; set; }
 
-        public Teacher? Teacher { get; set; }
-        public virtual List<Student> Students { get; set; }
-    }
+    public Teacher? Teacher { get; set; }
+    public virtual List<Student> Students { get; set; } = null!;
 }

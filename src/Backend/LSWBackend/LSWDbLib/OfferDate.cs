@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace LSWDbLib;
 
-namespace LSWDbLib
+public class OfferDate
 {
-    public class OfferDate
-    {
-        public int OfferDateId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int OfferId { get; set; }
+    public int OfferDateId { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public int OfferId { get; set; }
 
-        public Offer Offer { get; set; }
-    }
+    public Offer Offer { get; set; } = null!;
 }

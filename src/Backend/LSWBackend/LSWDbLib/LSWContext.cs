@@ -1,40 +1,36 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Microsoft.EntityFrameworkCore;
 
-namespace LSWDbLib
+namespace LSWDbLib;
+
+public class LSWContext : DbContext
 {
-    public class LSWContext : DbContext
-    {
-        public LSWContext() {
-        }
+    public LSWContext() {
+    }
 
-        public LSWContext(DbContextOptions<LSWContext> options) : base(options) {
-        }
+    public LSWContext(DbContextOptions<LSWContext> options) : base(options) {
+    }
 
 
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Offer> Offers { get; set; }
-        public DbSet<OfferDate> OfferDates { get; set; }
-        public DbSet<StudentOffer> StudentOffers { get; set; }
-        public DbSet<WaitingList> WaitingLists { get; set; }
-        public DbSet<OfferTeacher> OfferTeachers { get; set; }
-        public DbSet<Report> Reports { get; set; }
-        public DbSet<ReportImage> ReportImages { get; set; }
-        public DbSet<Clazz> ClassRooms { get; set; }
-        public DbSet<ClassOffer> ClassRoomOffers { get; set; }
-        public DbSet<Priority> Priorities { get; set; }
-        public DbSet<TeacherLesson> TeacherLessons { get; set; }
+    public DbSet<Student> Students { get; set; } = null!;
+    public DbSet<Teacher> Teachers { get; set; } = null!;
+    public DbSet<Offer> Offers { get; set; } = null!;
+    public DbSet<OfferDate> OfferDates { get; set; } = null!;
+    public DbSet<StudentOffer> StudentOffers { get; set; } = null!;
+    public DbSet<WaitingList> WaitingLists { get; set; } = null!;
+    public DbSet<OfferTeacher> OfferTeachers { get; set; } = null!;
+    public DbSet<Report> Reports { get; set; } = null!;
+    public DbSet<ReportImage> ReportImages { get; set; } = null!;
+    public DbSet<Clazz> ClassRooms { get; set; } = null!;
+    public DbSet<ClassOffer> ClassRoomOffers { get; set; } = null!;
+    public DbSet<Priority> Priorities { get; set; } = null!;
+    public DbSet<TeacherLesson> TeacherLessons { get; set; } = null!;
+    public DbSet<AvailableDate> AvailableDates { get; set; } = null!;
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            if (!optionsBuilder.IsConfigured) {
-                optionsBuilder.UseSqlServer(@"server=(LocalDB)\mssqllocaldb;attachdbfilename=D:\Temp\Persons.mdf;database=LSWDb;integrated security=True;MultipleActiveResultSets=True;");
-            }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+        if (!optionsBuilder.IsConfigured) {
+            optionsBuilder.UseSqlServer(@"server=(LocalDB)\mssqllocaldb;attachdbfilename=D:\Temp\Persons.mdf;database=LSWDb;integrated security=True;MultipleActiveResultSets=True;");
         }
     }
 }
