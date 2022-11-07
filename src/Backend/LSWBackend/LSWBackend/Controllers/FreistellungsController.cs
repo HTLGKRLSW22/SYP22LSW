@@ -13,7 +13,7 @@ namespace LSWBackend.Controllers
         public FreistellungsController(FreistellungsService freistellungsService) => _freistellungsService = freistellungsService;
 
         [HttpPost("[action]")]
-        public object SetFreistellung([FromBody] FreistellungsDto freistellungsDto)
+        public bool SetFreistellung([FromBody] FreistellungsDto freistellungsDto)
         {
             try
             {
