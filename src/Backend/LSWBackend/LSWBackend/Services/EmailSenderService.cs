@@ -8,17 +8,17 @@ namespace LSWBackend.Services
         public SmtpClient SenderClient { get; set; } = new SmtpClient();
 
         private string smtpServer = "smtp-mail.outlook.com";
-        private string senderMailAddress = "lsw-htlgrieskirchen@outlook.com";
-        private string senderMailPw = "SYP2022LSW";
+        private string[] credentials;
 
         public EmailSenderService()
         {
             try
             {
+                credentials = File.ReadAllLines("Services/lws_email_default.html");
                 SenderClient = new SmtpClient(smtpServer)
                 {
                     Port = 587,
-                    Credentials = new NetworkCredential(senderMailAddress, senderMailPw),
+                    Credentials = new NetworkCredential(credentials[0], credentials[1]),
                     EnableSsl = true,
                 };
             }
@@ -34,7 +34,7 @@ namespace LSWBackend.Services
             {
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress(senderMailAddress),
+                    From = new MailAddress(credentials[0]),
                     Subject = subject,
                     Body = message,
                     IsBodyHtml = true,
