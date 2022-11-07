@@ -11,7 +11,7 @@ builder.Services.AddCors(options => options.AddPolicy(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-string connectionString = builder.Configuration.GetConnectionString("LSWDb_Relative");
+string connectionString = builder.Configuration.GetConnectionString("LSWDb");
 string location = System.Reflection.Assembly.GetEntryAssembly()!.Location;
 string dataDirectory = Path.GetDirectoryName(location)!;
 connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + Path.DirectorySeparatorChar);
