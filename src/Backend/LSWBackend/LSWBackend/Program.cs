@@ -21,6 +21,8 @@ builder.Services.AddHostedService<DatabaseBackgroundService>();
 builder.Services.AddScoped<EmailSenderService>().AddScoped<SendEmailsService>();
 
 builder.Services.AddScoped<StudentsService>();
+builder.Services.AddScoped<EmailSenderService>();
+builder.Services.AddScoped<NoCourseNotifierService>();
 
 #endregion
 
@@ -54,4 +56,3 @@ app.MapControllers();
 #endregion
 
 app.Run();
-
