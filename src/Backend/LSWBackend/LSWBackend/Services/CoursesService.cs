@@ -9,36 +9,6 @@ namespace LSWBackend.Services
 
         public CoursesService(LSWContext db) => _db = db;
 
-        public bool AddStudentToCourse(out string errorMsg/*, StudentCourseDto studentCourseDto*/)
-        {
-            /*var course = _db.Courses.Include(x => x.Students).SingleOrDefault(x => x.CourseId == studentCourseDto.CourseId);
-            var student = _db.Students.SingleOrDefault(x => x.StudentId == studentCourseDto.StudentId);
-            if(course == null || student == null)
-            {
-                errorMsg = course == null ? $"No course found with id: {studentCourseDto.CourseId}": $"No student found with id: {studentCourseDto.StudentId}";
-                return false;
-            }
-            course.Students.Add(student);
-            _db.SaveChanges();*/
-            errorMsg = "Success";
-            return true;
-        }
-
-        public bool RemoveStudentFromCourse(out string errorMsg/*, StudentCourseDto studentCourseDto*/)
-        {
-            /*var course = _db.Courses.Include(x => x.Students).SingleOrDefault(x => x.CourseId == studentCourseDto.CourseId);
-            var student = _db.Students.SingleOrDefault(x => x.StudentId == studentCourseDto.StudentId);
-            if (course == null || student == null)
-            {
-                errorMsg = course == null ? $"No course found with id: {studentCourseDto.CourseId}" : $"No student found with id: {studentCourseDto.StudentId}";
-                return false;
-            }
-            course.Students.Remove(student);
-            _db.SaveChanges();*/
-            errorMsg = "Success";
-            return true;
-        }
-
         public Offer EditCourse(int id, OfferDto offerDto)
         {
             try

@@ -23,6 +23,16 @@
 
         public WaitingList AddStudentToWaitingList(int studentId, int offerId)
         {
+            try
+            {
+                //checked if ids are valid
+                var student = _db.Students.Single(x => x.StudentId == studentId);
+                var offer = _db.Offers.Single(x => x.OfferId == offerId);
+            }
+            catch (Exception ex)
+            {
+                return new WaitingList();
+            }
             var waitingList = new WaitingList
             {
                 OfferId = offerId,
