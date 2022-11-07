@@ -19,6 +19,7 @@ builder.Services.AddDbContext<LSWContext>(options => options.UseSqlServer(connec
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
 builder.Services.AddScoped<EmailSenderService>();
+builder.Services.AddScoped<NoCourseNotifierService>();
 
 #endregion
 
