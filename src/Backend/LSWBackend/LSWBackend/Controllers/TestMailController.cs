@@ -25,5 +25,14 @@ namespace LSWBackend.Controllers
 
             return "yay";
         }
+
+        [HttpGet("welcome/{email}")]
+        public string SendwelcomeEmail(string email)
+        {
+            _s.SendSignUpStart(email, "12.12.2022");
+
+            return "yay";
+        }
+
     }
 }
