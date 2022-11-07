@@ -2,110 +2,93 @@
 {
     public class OfferService
     {
-        private LSWContext _db;
+        private LSWContext db;
+
         public OfferService(LSWContext db)
         {
-            this._db = db;
+            this.db = db;
         }
 
-        public bool DeleteCourse(out string errorMsg, int courseId)
+        public bool DeleteOffer(out string errorMsg, int offerId)
         {
-            if (_db.Offers.Where(x => x.CourseId == courseId).Count() == 0)
+            if (db.Offers.Where(x => x.OfferId == offerId).Count() == 0)
             {
-             errorMsg = $"No Course found with id: {courseId}";
-             return false;    
-            }
-            _db.Courses.Remove(_db.Courses.Single(x => x.CourseId == courseId));
-            _db.SaveChanges();
-            errorMsg = "Success";
-            return true;
-        }
-
-        public bool CreateCourse(out string errorMsg, int teacherId/*, Course course*/)
-        {
-            //if (db.Teachers.Where(x => x.TeacherId == teacherId).Count() == 0)
-            //{
-            //  errorMsg = $"No Teacher found with id: {teacherId}";
-            //  return false;    
-            //}
-            //db.Teachers.Single(x => x.TeacherId == teacherId).Courses.Add(course);
-            //db.SaveChanges();
-            errorMsg = "Success";
-            return true;
-        }
-
-
-        public bool AddStudentToCourse(out string errorMsg/*, StudentCourseDto studentCourseDto*/)
-        {
-            /*var course = _db.Courses.Include(x => x.Students).SingleOrDefault(x => x.CourseId == studentCourseDto.CourseId);
-            var student = _db.Students.SingleOrDefault(x => x.StudentId == studentCourseDto.StudentId);
-            if(course == null || student == null)
-            {
-                errorMsg = course == null ? $"No course found with id: {studentCourseDto.CourseId}": $"No student found with id: {studentCourseDto.StudentId}";
+                errorMsg = $"No offer found with id: {offerId}";
                 return false;
             }
-            course.Students.Add(student);
-            _db.SaveChanges();*/
+            db.Offers.Remove(db.Offers.Single(x => x.OfferId == offerId));
+            db.SaveChanges();
             errorMsg = "Success";
             return true;
         }
 
-        public bool RemoveStudentFromCourse(out string errorMsg/*, StudentCourseDto studentCourseDto*/)
+        public bool CreateOffer(out string errorMsg, int teacherId, Offer offer)
         {
-            /*var course = _db.Courses.Include(x => x.Students).SingleOrDefault(x => x.CourseId == studentCourseDto.CourseId);
-            var student = _db.Students.SingleOrDefault(x => x.StudentId == studentCourseDto.StudentId);
-            if (course == null || student == null)
+            if (db.Teachers.Where(x => x.TeacherId == teacherId).Count() == 0)
             {
-                errorMsg = course == null ? $"No course found with id: {studentCourseDto.CourseId}" : $"No student found with id: {studentCourseDto.StudentId}";
+                errorMsg = $"No Teacher found with id: {teacherId}";
                 return false;
             }
-            course.Students.Remove(student);
-            _db.SaveChanges();*/
+            db.Teachers.Single(x => x.TeacherId == teacherId).Offers.Add(offer);
+            db.SaveChanges();
             errorMsg = "Success";
             return true;
         }
 
-        public void /*Course*/ EditCourse( /*int id, Course course*/)
+
+        public bool AddStudentToOffer(out string errorMsg, StudentOffer studentOffer)
+        {
+            var offer = db.Offers.Include(x => x.StudentOffers).SingleOrDefault(x => x.OfferId == studentOffer.OfferId);
+            var student = db.Students.SingleOrDefault(x => x.StudentId == studentOffer.StudentId);
+            if (offer == null || student == null)
+            {
+                errorMsg = offer == null ? $"No offer found with id: {studentOffer.OfferId}" : $"No student found with id: {studentOffer.StudentId}";
+                return false;
+            }
+            offer.StudentOffers.Add(studentOffer);
+            db.SaveChanges();
+            errorMsg = "Success";
+            return true;
+        }
+
+        public bool RemoveStudentFromOffer(out string errorMsg, StudentOffer studentOffer)
+        {
+            var offer = db.Offers.Include(x => x.StudentOffers).SingleOrDefault(x => x.OfferId == studentOffer.OfferId);
+            var student = db.Students.SingleOrDefault(x => x.StudentId == studentOffer.StudentId);
+            if (offer == null || student == null)
+            {
+                errorMsg = offer == null ? $"No offer found with id: {studentOffer.OfferId}" : $"No student found with id: {studentOffer.OfferId}";
+                return false;
+            }
+            offer.StudentOffers.Remove(studentOffer);
+            db.SaveChanges();
+            errorMsg = "Success";
+            return true;
+        }
+
+        public Offer EditOffer(int id, Offer offer)
         {
             try
             {
-                //var courseToEdit = db.Courses.Single(x => x.CourseId == id);
-                //courseToEdit.CopyPropertiesFrom(course);
-                //db.SaveChanges();
+                var courseToEdit = db.Offers.Single(x => x.OfferId == id);
+                courseToEdit.CopyPropertiesFrom(offer);
+                db.SaveChanges();
             }
             catch (InvalidOperationException ex)
             {
-                //return new Course();
+                return new Offer();
             }
+            return null;
         }
 
-        public List<Offer> GetCourse()
+	  public List<Offer> GetCourse()
         {
-            return _db.Offers.ToList();
+            return db.Offers.ToList();
         }
 
         public List<Student> GetStudent()
         {
-            return _db.Students.ToList();
+            return db.Students.ToList();
         }
-
-        #region WaitingList
-
-        public void /*Student*/ RemoveStudentFromWaitingList(/*int waitingListId, int studentId*/)
-        {
-            //var student = db.Students.Single(x => x.StudentId == studentId);
-            //db.WaitingLists.Single(x => x.WaitingListId == waitingListId).Students.Remove(student);
-            //db.SaveChanges();
-            //return student;
-        }
-
-        public void /*Student*/ AddStudentToWaitingList(/*int waitingListId, Student student*/)
-        {
-            //db.WaitingLists.Single(x => x.WaitingListId == waitingListId).Students.Add(student);
-            //db.SaveChanges();
-            //return student;
-        }
-
-        #endregion
     }
 }
