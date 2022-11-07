@@ -21,8 +21,8 @@ public class LSWContext : DbContext
     public DbSet<OfferTeacher> OfferTeachers { get; set; } = null!;
     public DbSet<Report> Reports { get; set; } = null!;
     public DbSet<ReportImage> ReportImages { get; set; } = null!;
-    public DbSet<Clazz> ClassRooms { get; set; } = null!;
-    public DbSet<ClassOffer> ClassRoomOffers { get; set; } = null!;
+    public DbSet<Clazz> Clazzes { get; set; } = null!;
+    public DbSet<ClassOffer> ClassOffers { get; set; } = null!;
     public DbSet<Priority> Priorities { get; set; } = null!;
     public DbSet<TeacherLesson> TeacherLessons { get; set; } = null!;
     public DbSet<AvailableDate> AvailableDates { get; set; } = null!;
