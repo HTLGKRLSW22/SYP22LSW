@@ -21,7 +21,6 @@ namespace LSWBackend.Controllers
             _appSettings = appSettings.Value;
         }
 
-
         [HttpGet("login")]
         public ActionResult<string[]> Login(string username)
         {

@@ -9,7 +9,6 @@ global using System.Threading.Tasks;
 global using LSWBackend;
 global using LSWBackend.Dtos;
 global using LSWBackend.Services;
-
 global using LSWDbLib;
 
 global using Microsoft.AspNetCore.Builder;
@@ -21,4 +20,4 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
-
+global using Microsoft.Extensions.Logging;
