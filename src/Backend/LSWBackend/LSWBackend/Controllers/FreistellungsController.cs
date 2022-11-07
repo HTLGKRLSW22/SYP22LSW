@@ -18,7 +18,7 @@ public class FreistellungsController : ControllerBase
             return _freistellungsService.SetFreistellung(freistellungsDto);
         }
         catch {
-            return 0;
+            return false;
         }
 
     }
