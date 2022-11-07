@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace LSWDbLib;
 
-namespace LSWDbLib
+public class TeacherLesson
 {
-    public class TeacherLesson
-    {
-        public int TeacherLessonId { get; set; }
-        public int TeacherId { get; set; }
-        public DateTime LessonDate { get; set; }
-        public int LessonAmount { get; set; }
+    public int TeacherLessonId { get; set; }
+    public int TeacherId { get; set; }
+    public DateTime LessonDate { get; set; }
+    public int LessonAmount { get; set; }
 
-        public Teacher Teacher { get; set; }
-    }
+    public Teacher Teacher { get; set; } = null!;
 }
