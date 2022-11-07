@@ -1,6 +1,5 @@
-﻿namespace LSWBackend.Dtos
+﻿namespace LSWBackend.Dtos;
+
+public class DeleteMe
 {
-    public class DeleteMe
-    {
-    }
 }
