@@ -47,7 +47,7 @@ public class SendEmailsService
 
     public void SendWarningTimeEndingSoon(string email, string enddate, string[] datesNotEnrolled) {
 
-        var dates = datesNotEnrolled.Length == 1 ? $"den {datesNotEnrolled[0]}" : $"die Tage {string.Join(", ", datesNotEnrolled)}";
+        string dates = datesNotEnrolled.Length == 1 ? $"den {datesNotEnrolled[0]}" : $"die Tage {string.Join(", ", datesNotEnrolled)}";
 
         //string dates = $" den {datesNotEnrolled[0]}";
         //if (datesNotEnrolled.Length > 1) {

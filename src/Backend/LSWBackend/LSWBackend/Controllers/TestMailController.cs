@@ -36,10 +36,10 @@ public class TestMailController : Controller
     [HttpGet("ZeitraumEndet/{email}")]
     public string SendWarningEndingSoon(string email) {
         //Mehrere Tage
-        var dates = new string[] { "01.12.2022", "02.12.2022" };
+        string[] dates = new string[] { "01.12.2022", "02.12.2022" };
         _s.SendWarningTimeEndingSoon(email, "16.11.2022", dates);
 
-        var date = new string[] { "01.12.2022" };
+        string[] date = new string[] { "01.12.2022" };
         _s.SendWarningTimeEndingSoon(email, "16.11.2022", date);
 
         return "Email send";
@@ -68,10 +68,10 @@ public class TestMailController : Controller
         _s.SendAbcence(email, "01.12.2022");
 
         //Mehrere Tage
-        var dates = new string[] { "01.12.2022", "02.12.2022" };
+        string[] dates = new string[] { "01.12.2022", "02.12.2022" };
         _s.SendWarningTimeEndingSoon(email, "16.11.2022", dates);
 
-        var date = new string[] { "01.12.2022" };
+        string[] date = new string[] { "01.12.2022" };
         _s.SendWarningTimeEndingSoon(email, "16.11.2022", date);
 
         _s.SendNotificationCourseFailed(email, "Testkurs");
