@@ -6,13 +6,13 @@ import {Observable, tap} from "rxjs";
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl:string = "insert_url_here";
+  baseUrl:string = "http://localhost:7171";
 
   constructor(private http:HttpClient) { }
 
   public loginWithCredentials(username:string, password:string, saveCredentials:boolean):Observable<AuthDto> {
     console.log(`AuthService::loginWithCredentials ${username}`);
-    return this.http.post<AuthDto>(`${this.baseUrl}/`, {
+    return this.http.post<AuthDto>(`${this.baseUrl}/Authentication`, {
       username: username, password: password
     }).pipe(
       tap(user => {
