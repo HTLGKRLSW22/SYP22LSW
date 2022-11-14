@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { FeatureEagerRoutingModule } from './feature-eager-routing.module';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LoginComponent,
+  ],
   imports: [
     CommonModule,
-    FeatureEagerRoutingModule
+    FormsModule,
+    FeatureEagerRoutingModule,
   ]
 })
 export class FeatureEagerModule { }
