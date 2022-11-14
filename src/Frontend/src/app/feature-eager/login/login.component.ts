@@ -19,5 +19,4 @@ export class LoginComponent implements OnInit {
       // TODO JWT-Auth
     }
   }
-
 }
