@@ -6,7 +6,7 @@ namespace LSWBackend.Controllers;
 [ApiController]
 public class TestMailController : Controller
 {
-    private SendEmailsService _s;
+    private readonly SendEmailsService _s;
     public TestMailController(SendEmailsService s) => _s = s;
 
     [HttpGet("{email}")]
