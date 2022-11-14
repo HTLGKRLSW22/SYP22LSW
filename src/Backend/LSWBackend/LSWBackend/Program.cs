@@ -45,6 +45,11 @@ connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + P
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
+builder.Services.AddScoped<OffersService>();
+builder.Services.AddScoped<StudentsService>();
+builder.Services.AddScoped<SendEmailsService>();
+builder.Services.AddScoped<EmailSenderService>();
+builder.Services.AddScoped<NoCourseNotifierService>();
 builder.Services.AddScoped<StudentsService>();
 
 #endregion
