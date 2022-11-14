@@ -10,6 +10,7 @@ public class Offer
     public string MeetingPoint { get; set; } = null!;
     public decimal Costs { get; set; }
     public string Location { get; set; } = null!;
+    public int VisibleForStudents { get; set; }
     public int? TeacherId { get; set; }
 
     public Teacher? Teacher { get; set; }

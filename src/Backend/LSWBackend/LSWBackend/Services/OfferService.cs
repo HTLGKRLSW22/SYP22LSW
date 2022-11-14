@@ -14,7 +14,7 @@ namespace LSWBackend.Services
 
         public IEnumerable<OfferDto> getAllOffers()
         {
-            return _db.Offers.Include(x => x.Teacher).Select(x => new OfferDto
+            return _db.Offers.Include(x => x.Teacher).Include(y => y.OfferDates).Select(x => new OfferDto
             {
                 OfferId = x.OfferId,
                 TeacherId = x.TeacherId,
