@@ -42,7 +42,6 @@ string connectionString = builder.Configuration.GetConnectionString("LSWDb");
 string location = System.Reflection.Assembly.GetEntryAssembly()!.Location;
 string dataDirectory = Path.GetDirectoryName(location)!;
 connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + Path.DirectorySeparatorChar);
-Console.WriteLine(connectionString);
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
@@ -51,6 +50,7 @@ builder.Services.AddScoped<StudentsService>();
 builder.Services.AddScoped<SendEmailsService>();
 builder.Services.AddScoped<EmailSenderService>();
 builder.Services.AddScoped<NoCourseNotifierService>();
+builder.Services.AddScoped<StudentsService>();
 
 #endregion
 
