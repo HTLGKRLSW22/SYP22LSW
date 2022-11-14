@@ -23,4 +23,8 @@ export class AuthService {
     )
   }
 
+  public logout():void {
+    console.log(`AuthService::logout`);
+    sessionStorage.removeItem('userToken');
+  }
 }
