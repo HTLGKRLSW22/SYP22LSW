@@ -48,7 +48,7 @@ builder.Services.AddDbContext<LSWContext>(options => options.UseSqlServer(connec
 builder.Services.AddScoped<OfferService>();
 Console.WriteLine(connectionString);
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlite(connectionString));
-//builder.Services.AddScoped<OfferService>();
+builder.Services.AddScoped<OfferService>();
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
 builder.Services.AddScoped<StudentsService>();
