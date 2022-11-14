@@ -8,12 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LSWDbLib\LSWDbLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+  </ItemGroup>
   <ItemGroup>
     <None Update="Services\lws_email_default.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
