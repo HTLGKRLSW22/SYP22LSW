@@ -9,20 +9,18 @@ using Microsoft.Extensions.Options;
 
 namespace LSWBackend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        static HttpClient client = new HttpClient();
-        OfferService _service;
+        private static HttpClient client = new HttpClient();
         private readonly AppSettings _appSettings;
 
-        public AuthenticationController(OfferService service, IOptions<AppSettings> appSettings)
+        public AuthenticationController(IOptions<AppSettings> appSettings)
         {
-            this._service = service;
             _appSettings = appSettings.Value;
         }
-
+        
 
         [HttpGet("login")]
         public ActionResult<string[]> Login(string username)
