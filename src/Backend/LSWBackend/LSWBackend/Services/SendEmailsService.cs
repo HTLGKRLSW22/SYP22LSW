@@ -21,7 +21,7 @@ public class SendEmailsService
         string body = File.ReadAllText(PahtDefaultEmail).Replace("$$TITLE", $"Letzte Schulwoche: Bei \"{offer}\" angemeldet")
             .Replace("$$CONTENT", $"Du hast dich für den Kurs {offer} am {day} angemeldet. <br> <br> " +
                                   $"Du wirst am Ende der Anmeldefrist nochmal informiert ob dein Kurs zustande kommt. " +
-                                  $"Wenn der Kurs nicht zustande kommt wirst du auch am Ende der Anmeldefrist informiert" +
+                                  $"Wenn der Kurs nicht zustande kommt wirst du am Ende der Anmeldefrist informiert" +
                                   $" und muss dich dann für einen anderen Kurs anmelden.");
         _email.SendMail(email, $"Letzte Schulwoche: Anmeldung erfolgreich", body);
     }
@@ -46,18 +46,21 @@ public class SendEmailsService
     }
 
     public void SendWarningTimeEndingSoon(string email, string enddate, string[] datesNotEnrolled) {
-        string dates = $" den {datesNotEnrolled[0]}";
-        if (datesNotEnrolled.Length > 1) {
-            dates = " die Tage: ";
-            for (int i = 1; i < datesNotEnrolled.Length - 1; i++) {
-                dates += datesNotEnrolled[i] + ", ";
-            }
-            dates += "und " + datesNotEnrolled[^1];
-        }
+
+        var dates = datesNotEnrolled.Length == 1 ? $"den {datesNotEnrolled[0]}" : $"die Tage {string.Join(", ", datesNotEnrolled)}";
+
+        //string dates = $" den {datesNotEnrolled[0]}";
+        //if (datesNotEnrolled.Length > 1) {
+        //    dates = " die Tage: ";
+        //    for (int i = 1; i < datesNotEnrolled.Length - 1; i++) {
+        //        dates += datesNotEnrolled[i] + ", ";
+        //    }
+        //    dates += "und " + datesNotEnrolled[datesNotEnrolled.Length - 1];
+        //}
 
         string body = File.ReadAllText(PahtWarningEmail)
             .Replace("$$TITLE", $"Du kannst dich noch bis zum {enddate} eintragen")
-            .Replace("$$CONTENT", $"Du hast dich noch nicht für {dates} eingetragen" +
+            .Replace("$$CONTENT", $"Du hast dich noch nicht für {dates} eingetragen. " +
                                   $"Du musst dich bist zum {enddate} eintragen haben" +
                                   $"<br> Wenn du dich nicht bis zum {enddate} einträgst wirdst du einem Kurs zugeteilt");
 
@@ -77,8 +80,8 @@ public class SendEmailsService
     public void SendNotificationNoCourseOrNoAssignment(string email) {
         string body = File.ReadAllText(PahtDefaultEmail)
           .Replace("$$TITLE", $"Kein Kurs/keine Zuteilung")
-          .Replace("$$CONTENT", $"Sie haben noch keinen Kurs erstellt, oder sind noch keinem zugeteilt " +
-                                $"Bitte erstellen Sie einen Kurs oder lassen Sie sich als Begleitperson zuteilen");
+          .Replace("$$CONTENT", $"Sie haben noch keinen Kurs erstellt, oder sind noch keinem zugeteilt. " +
+                                $"Bitte erstellen Sie einen Kurs oder lassen Sie sich als Begleitperson zuteilen.");
 
         _email.SendMail(email, $"Letzte Schulwoche: Noch kein Kurs/keine Zuteilung", body);
     }
