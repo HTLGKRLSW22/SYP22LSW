@@ -17,7 +17,7 @@ string dataDirectory = Path.GetDirectoryName(location)!;
 connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + Path.DirectorySeparatorChar);
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddHostedService<DatabaseBackgroundService>();
-
+builder.Services.AddScoped<OffersService>();
 builder.Services.AddScoped<StudentsService>();
 builder.Services.AddScoped<SendEmailsService>();
 builder.Services.AddScoped<EmailSenderService>();

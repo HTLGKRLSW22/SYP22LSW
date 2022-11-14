@@ -51,7 +51,7 @@ namespace LSWBackend.Services
             _email.SendMail(email, $"Letzte Schulwoche Freistellung {absencedate}", body);
         }
 
-        public void SendAbcence(string email, string daysremaing, string enddate, string[] datesnoteingeragen) {
+        public void SendAbcence(string email, string daysremaing, string enddate, string[] datesnoteingeragen, string absencedate) {
             string dates = $"für den {datesnoteingeragen[0]}";
             if (datesnoteingeragen.Length > 1) {
                 dates = "für die Tage: ";
