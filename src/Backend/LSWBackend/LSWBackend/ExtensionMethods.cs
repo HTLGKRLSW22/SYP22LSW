@@ -6,7 +6,7 @@ public static class ExtensionMethods
 
     public static T CopyPropertiesFrom<T>(this T target, object source, string[]? ignoreProperties) {
         if (target == null) return target;
-        if (ignoreProperties == null) ignoreProperties = Array.Empty<string>();
+        ignoreProperties ??= Array.Empty<string>();
         var propsSource = source.GetType().GetProperties().Where(x => x.CanRead && !ignoreProperties.Contains(x.Name));
         var propsTarget = target.GetType().GetProperties().Where(x => x.CanWrite);
 

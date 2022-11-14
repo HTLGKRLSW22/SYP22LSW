@@ -1,7 +1,6 @@
-﻿namespace LSWBackend
+﻿namespace LSWBackend;
+
+public class AppSettings
 {
-    public class AppSettings
-    {
-        public string Secret { get; set; }
-    }
+    public string Secret { get; set; }
 }

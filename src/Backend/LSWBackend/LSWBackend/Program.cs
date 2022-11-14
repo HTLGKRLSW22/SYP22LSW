@@ -1,4 +1,5 @@
 using System.Text;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,17 +14,14 @@ var appSettings = appSettingsSection.Get<AppSettings>();
 byte[]? key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
 #region -------------------------------------------- ConfigureServices
-builder.Services.AddAuthentication(x =>
-{
+builder.Services.AddAuthentication(x => {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .AddJwtBearer(x =>
-    {
+    .AddJwtBearer(x => {
         x.RequireHttpsMetadata = false;
         x.SaveToken = true;
-        x.TokenValidationParameters = new TokenValidationParameters
-        {
+        x.TokenValidationParameters = new TokenValidationParameters {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(key),
             ValidateIssuer = false,
