@@ -3,15 +3,9 @@
 public class NoCourseNotifierService
 {
     private readonly LSWContext _db;
-    private readonly EmailSenderService _emailSender;
 
-    private DateTime enrollmentDeadline = DateTime.Now;
-    private int nofifyDaysBefore = 1;
+    public NoCourseNotifierService(LSWContext db) => _db = db;
 
-    public NoCourseNotifierService(LSWContext db, EmailSenderService emailSender) {
-        _db = db;
-        _emailSender = emailSender;
-    }
 
     private List<Student> GetStudentsWithoutEnrollment() {
         var dates = _db.OfferDates;
@@ -24,8 +18,8 @@ public class NoCourseNotifierService
              .ToList();
     }
 
-    private bool IsStudentEnrolledOnAllDays(Student student) {
-        return student.StudentOffers.SelectMany(x => x.Offer.OfferDates).ToList().Count() < 3;
+    private static bool IsStudentEnrolledOnAllDays(Student student) {
+        return student.StudentOffers.SelectMany(x => x.Offer.OfferDates).ToList().Count < 3;
     }
 
     public void NotifyStudentsWithoutEnrollment() {

@@ -7,15 +7,15 @@ public class EmailSenderService
 {
     public SmtpClient SenderClient { get; set; } = new SmtpClient();
 
-    private string smtpServer = "smtp-mail.outlook.com";
-    private string[] credentials = new string[] { };
+    private readonly string _smtpServer = "smtp-mail.outlook.com";
+    private readonly string[] _credentials = Array.Empty<string>();
 
     public EmailSenderService() {
         try {
-            credentials = File.ReadAllLines("Services/Email.txt");
-            SenderClient = new SmtpClient(smtpServer) {
+            _credentials = File.ReadAllLines("Services/Email.txt");
+            SenderClient = new SmtpClient(_smtpServer) {
                 Port = 587,
-                Credentials = new NetworkCredential(credentials[0], credentials[1]),
+                Credentials = new NetworkCredential(_credentials[0], _credentials[1]),
                 EnableSsl = true,
             };
         }
@@ -27,7 +27,7 @@ public class EmailSenderService
     public bool SendMail(string recieverAddress, string subject, string message) {
         try {
             var mailMessage = new MailMessage {
-                From = new MailAddress(credentials[0]),
+                From = new MailAddress(_credentials[0]),
                 Subject = subject,
                 Body = message,
                 IsBodyHtml = true,
