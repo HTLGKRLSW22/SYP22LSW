@@ -16,8 +16,11 @@ export class AuthService {
       username: username, password: password
     }).pipe(
       tap(user => {
-        if (user && user.token && saveCredentials) {
+        if (user && user.token) {
           sessionStorage.setItem('userToken', JSON.stringify(user));
+          if (saveCredentials) {
+            localStorage.setItem('userToken', JSON.stringify(user));
+          }
         }
       })
     )
@@ -26,5 +29,6 @@ export class AuthService {
   public logout():void {
     console.log(`AuthService::logout`);
     sessionStorage.removeItem('userToken');
+    localStorage.removeItem('userToken');
   }
 }
