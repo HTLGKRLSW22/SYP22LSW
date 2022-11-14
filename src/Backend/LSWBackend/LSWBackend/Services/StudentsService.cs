@@ -28,6 +28,7 @@ public class StudentsService
         var offerDates = _db.StudentOffers
             .Where(x => x.StudentId == studentId)
             .SelectMany(x => x.Offer.OfferDates)
+            .Include(x => x.Offer)
             .ToList();
 
         return availableDates
