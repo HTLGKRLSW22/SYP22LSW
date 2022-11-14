@@ -1,20 +1,19 @@
 ﻿using LSWDbLib;
 
-namespace LSWBackend
+namespace LSWBackend;
+
+public class DatabaseBackgroundService : BackgroundService
 {
-    public class DatabaseBackgroundService : BackgroundService
-    {
-        private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceProvider _serviceProvider;
 
-        public DatabaseBackgroundService(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
+    public DatabaseBackgroundService(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
 
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken) {
-            using IServiceScope scope = _serviceProvider.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<LSWContext>();
-            db.Database.EnsureCreated();
-            Console.WriteLine("Database created...");
-            return Task.Run(() => { });
-        }
+    protected override Task ExecuteAsync(CancellationToken stoppingToken) {
+        using IServiceScope scope = _serviceProvider.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<LSWContext>();
+        db.Database.EnsureCreated();
+        Console.WriteLine("Database created...");
+        return Task.Run(() => { });
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace LSWBackend.Dtos
+﻿namespace LSWBackend.Dtos;
+
+public class StudentOfferDto
 {
-    public class StudentOfferDto
-    {
-        public int StudentOfferId { get; set; }
-        public int StudentId { get; set; }
-        public int OfferId { get; set; }
-    }
+    public int StudentOfferId { get; set; }
+    public int StudentId { get; set; }
+    public int OfferId { get; set; }
 }
