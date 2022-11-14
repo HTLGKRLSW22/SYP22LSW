@@ -50,5 +50,25 @@ namespace LSWBackend.Services
                                       $"und wurdest abgemeldet fallst du dich schon für einen Kurs angemeldet hast");
             _email.SendMail(email, $"Letzte Schulwoche Freistellung {absencedate}", body);
         }
+
+        public void SendAbcence(string email, string daysremaing, string enddate, string[] datesnoteingeragen) {
+            string dates = $"für den {datesnoteingeragen[0]}";
+            if (datesnoteingeragen.Length > 1) {
+                dates = "für die Tage: ";
+                for (int i = 1; i < datesnoteingeragen.Length-1; i++) {
+                    dates += datesnoteingeragen[i] + ", ";
+                }
+                dates += "und " + datesnoteingeragen[datesnoteingeragen.Length - 1];
+            }
+
+            string body = File.ReadAllText("Services/lws_email_default.html")
+                .Replace("$$TITLE", $"Du hast noch {daysremaing} zum eintargen bis zum {enddate}")
+                .Replace("$$CONTENT", $"Du hast dich noch nicht für {dates} eingetragen" +
+                                      $"Du musst dich bist zum {enddate} zum eintragen," +
+                                      $"das sind noch {enddate} Tage seitdem die Email versendet wurde! " +
+                                      $"<br> Wenn du dich bis zum {enddate} einträgst wirdst du einem Kurs zugeteilt");
+            _email.SendMail(email, $"Letzte Schulwoche Freistellung {absencedate}", body);
+        }
+
     }
 }
