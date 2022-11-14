@@ -11,8 +11,6 @@
   "profiles": {
     "LSWBackend": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": false,
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7171;http://localhost:5171",
       "environmentVariables": {

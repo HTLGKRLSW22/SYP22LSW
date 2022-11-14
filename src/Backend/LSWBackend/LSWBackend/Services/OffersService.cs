@@ -11,11 +11,10 @@ public class OffersService
     public OffersService(LSWContext db) => _db = db;
 
     public IEnumerable<OfferDto> GetAllOffers() {
-        return _db.Offers.Include(x => x.Teacher).Include(y => y.OfferDates).Select(x => new OfferDto {
+        return _db.Offers.Include(x => x.OfferTeachers).Include(y => y.OfferDates).Select(x => new OfferDto {
             OfferId = x.OfferId,
-            TeacherId = x.TeacherId,
-            Teacher = x.Teacher,
-            OfferDates = x.OfferDates,
+            OfferDates = x.OfferDates.Select(x => new OfferDateDTO().CopyPropertiesFrom(x)).ToList(),
+            OfferTeachers = x.OfferTeachers.Select(x => new OfferTeacherDTO().CopyPropertiesFrom(x)).ToList(),
             Title = x.Title
         }).ToList();
     }
