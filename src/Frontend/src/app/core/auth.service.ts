@@ -12,7 +12,7 @@ export class AuthService {
 
   public loginWithCredentials(username:string, password:string, saveCredentials:boolean):Observable<AuthDto> {
     console.log(`AuthService::loginWithCredentials ${username}`);
-    return this.http.post<AuthDto>(`${this.baseUrl}/Authentication/login?username=${username}`, {
+    return this.http.post<AuthDto>(`${this.baseUrl}/Authentication`, {
       username: username, password: password
     }).pipe(
       tap(user => {
