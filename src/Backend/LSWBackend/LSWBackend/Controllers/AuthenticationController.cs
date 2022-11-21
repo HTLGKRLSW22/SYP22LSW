@@ -21,7 +21,7 @@ public class AuthenticationController : ControllerBase
     public AuthenticationController(IOptions<AppSettings> appSettings) => _appSettings = appSettings.Value;
 
     [HttpPost("login")]
-    public ActionResult<string[]> Login([FromBody]LoginDto login) {
+    public ActionResult<string[]> Login([FromBody] LoginDto login) {
         //login und passwort wird von der B Klasse abgeprüft hierfür brauche ich dann nur einen get request der true oder false zurückgibt
         //HttpResponseMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:44300/api/authentication/login?{login}{password}");
         //ID Username
