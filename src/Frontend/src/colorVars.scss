@@ -1,0 +1,11 @@
+$main-color: rgb(102, 0, 255);
+
+$text-side-color: rgb(86, 86, 86);
+$text-side-highlighted-color: darken($main-color, 25);
+$text-side-background-highlighted: desaturate(lighten($main-color, 47), 50);
+
+$border-color: black;
+$light-border-color: rgb(237, 237, 237);
+$light-bg-color: rgb(245, 245, 245);
+
+$error-color: rgb(232, 42, 90);
