@@ -5,9 +5,10 @@ import { ApiModule, BASE_PATH } from './swagger';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FeatureEagerModule } from './feature-eager/feature-eager.module';
-import { SharedModule } from './shared/shared.module';
 import { environment } from 'src/environments/environment';
+import {LoginModule} from "./login/login.module";
+import {StudentModule} from "./student/student.module";
+import {TeacherModule} from "./teacher/teacher.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     HttpClientModule,
     ApiModule,
-    FeatureEagerModule,
+    LoginModule,
+    StudentModule,
+    TeacherModule,
     AppRoutingModule,
     SharedModule
   ],

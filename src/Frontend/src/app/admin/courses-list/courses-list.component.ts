@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { OfferDate, OfferDto, OffersService, ReplyDTO } from 'src/app/swagger';
-
+import {OfferDate, OfferDto, OffersService, ReplyDTO} from "../../swagger";
 
 @Component({
-  selector: 'app-admin-courses-list',
-  templateUrl: './admin-courses-list.component.html',
-  styleUrls: ['./admin-courses-list.component.scss']
+  selector: 'app-courses-list',
+  templateUrl: './courses-list.component.html',
+  styleUrls: ['./courses-list.component.scss']
 })
-export class AdminCoursesListComponent implements OnInit {
-
+export class CoursesListComponent implements OnInit {
 
   allCourses: OfferDto[] = [];
 
   constructor(private offersService: OffersService) {}
 
   ngOnInit(): void {
-    console.log('feature-lazy::admin-courses-list - Courses List works');
+    console.log('admin::courses-list - Courses List works');
     this.offersService.offersGetOffersGet()
       .subscribe((x: OfferDto[])=>{
         this.allCourses = x;
@@ -24,20 +22,19 @@ export class AdminCoursesListComponent implements OnInit {
   }
 
   deleteCourse(offerId: number): void {
-    console.log(`feature-lazy::admin-courses-list::deleteCourse - Button Delete clicked - offerId:${offerId}`);
+    console.log(`admin::courses-list::deleteCourse - Button Delete clicked - offerId:${offerId}`);
     this.offersService.offersDeleteOfferDelete(offerId)
       .subscribe((x: ReplyDTO)=>{
         console.table(x);
         this.reloadField();
       });
-    
   }
 
   editCourse(offerId: number): void {
-    console.log(`feature-lazy::admin-courses-list::editCourse - Button Edit clicked - offerId:${offerId}`);
+    console.log(`admin::courses-list::editCourse - Button Edit clicked - offerId:${offerId}`);
     this.reloadField();
   }
-  
+
   dateConverter(offerdates: OfferDate[]): string{
     if(offerdates.length === 0){
       return '';
