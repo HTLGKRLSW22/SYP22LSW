@@ -43,6 +43,18 @@ public class OffersService
         offer = new Offer().CopyPropertiesFrom(dto);
         _db.SaveChanges();
         return dto;
+    }
 
+    public bool CheckOfferFull(OfferDto dto)
+    {
+        bool reply = false;
+        int studentNum = _db.StudentOffers.Select(x => x.OfferId).Where(x => dto.OfferId == x).Sum();
+        int maxNum = _db.Offers.Single(x => x.OfferId == dto.OfferId).MaxStudents;
+        if(studentNum == maxNum)
+        {
+            //Send Emails
+            reply = true;
+        }
+        return reply;
     }
 }
