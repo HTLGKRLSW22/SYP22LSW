@@ -7,7 +7,7 @@ public class EmailSenderService
 {
     public SmtpClient SenderClient { get; set; } = new SmtpClient();
 
-    private readonly string _smtpServer = "smtp-mail.outlook.com";
+    private readonly string _smtpServer = "smtp.office365.com";
     private readonly string[] _credentials = Array.Empty<string>();
 
     public EmailSenderService() {
