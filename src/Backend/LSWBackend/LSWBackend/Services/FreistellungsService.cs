@@ -29,14 +29,16 @@ public class FreistellungsService
                 return true;
             }
             else if (student != null) {
+                var offersToRemove = new List<StudentOffer>();
                 foreach (StudentOffer offer in student.StudentOffers) {
                     foreach (OfferDate date in offer.Offer.OfferDates) {
                         if (date.StartDate.Date == freistellung.OfferDates[0].StartDate.Date) {
-                            _db.StudentOffers.Remove(offer);
-                            _db.SaveChanges();
+                            offersToRemove.Add(offer);
                         }
                     }
                 }
+                _db.StudentOffers.RemoveRange(offersToRemove);
+                _db.SaveChanges();
                 _db.StudentOffers.Add(new StudentOffer {
                     OfferId = freistellung.OfferId,
                     StudentId = student.StudentId,
