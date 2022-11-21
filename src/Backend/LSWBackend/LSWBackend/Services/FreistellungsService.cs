@@ -11,8 +11,13 @@ public class FreistellungsService
     public FreistellungsService(LSWContext db) => _db = db;
 
     public bool SetFreistellung(FreistellungsDto freistellungsDto) {
-        Student? student = _db.Students.SingleOrDefault(x => x.StudentId == freistellungsDto.StudentId);
-        Offer? freistellung = _db.Offers.SingleOrDefault(x => x.OfferId == freistellungsDto.FreistellungsId);
+        Student? student = _db.Students.Include(x => x.StudentOffers)
+            .ThenInclude(x => x.Offer)
+            .ThenInclude(x => x.OfferDates)
+            .SingleOrDefault(x => x.StudentId == freistellungsDto.StudentId);
+        Offer? freistellung = _db.Offers.Include(x => x.StudentOffers)
+            .Include(x => x.OfferDates)
+            .SingleOrDefault(x => x.OfferId == freistellungsDto.FreistellungsId);
         if (freistellung != null && freistellung.VisibleForStudents == 0) {
             if (student != null && student.StudentOffers.Count == 0) {
 

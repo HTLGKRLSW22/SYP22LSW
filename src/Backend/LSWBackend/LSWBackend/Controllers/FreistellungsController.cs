@@ -14,6 +14,6 @@ public class FreistellungsController : ControllerBase
     [HttpPost("[action]")]
     public ActionResult<FreistellungsDto> SetFreistellung([FromBody] FreistellungsDto freistellungsDto) {
         bool functioned = _freistellungsService.SetFreistellung(freistellungsDto);
-        return !functioned ? (ActionResult<FreistellungsDto>)BadRequest("Did not worked out") : (ActionResult<FreistellungsDto>)freistellungsDto;
+        return !functioned ? (ActionResult<FreistellungsDto>)BadRequest("") : (ActionResult<FreistellungsDto>)freistellungsDto;
     }
 }
