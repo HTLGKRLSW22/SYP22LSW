@@ -22,6 +22,7 @@ import {TeacherModule} from "./teacher/teacher.module";
     StudentModule,
     TeacherModule,
     AppRoutingModule,
+    SharedModule
   ],
   providers: [
     {provide: BASE_PATH, useValue: environment.apiRoot}
