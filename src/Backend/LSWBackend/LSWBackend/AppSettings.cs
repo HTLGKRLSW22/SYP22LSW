@@ -1,4 +1,4 @@
-﻿namespace LSWBackend;
+namespace LSWBackend;
 
 public class AppSettings
 {
