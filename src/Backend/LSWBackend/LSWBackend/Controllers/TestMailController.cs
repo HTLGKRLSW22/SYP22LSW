@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LSWBackend.Controllers;
 
@@ -11,54 +11,52 @@ public class TestMailController : Controller
 
     [HttpGet("{email}")]
     public string SendTestmail(string email) {
-        _s.SendTestmail(email);
-        return "Email send";
+        return _s.SendTestmail(email) ? "Email sent" : "Email could not be sent";
     }
 
     [HttpGet("Anmeldung/{email}")]
     public string SendOfferSelectedmail(string email) {
-        _s.SendOfferChoosen(email, "imaginary offer", DateTime.Now.ToShortDateString());
-        return "Email send";
+        return _s.SendOfferChoosen(email, "imaginary offer", DateTime.Now.ToShortDateString()) ? "Email sent" : "Email could not be sent";
     }
 
     [HttpGet("AnmeldezeitraumBegonnen/{email}")]
     public string SendwelcomeEmail(string email) {
-        _s.SendSignUpStart(email, "12.12.2022");
-        return "Email send";
+        return _s.SendSignUpStart(email, "12.12.2022") ? "Email sent" : "Email could not be sent";
     }
 
     [HttpGet("Freistellung/{email}")]
     public string SendAbsenceMail(string email) {
-        _s.SendAbcence(email, "01.12.2022");
-        return "Email send";
+        return _s.SendAbcence(email, "01.12.2022") ? "Email sent" : "Email could not be sent";
     }
 
     [HttpGet("ZeitraumEndet/{email}")]
     public string SendWarningEndingSoon(string email) {
+        bool success;
+
         //Mehrere Tage
         string[] dates = new string[] { "01.12.2022", "02.12.2022" };
         _s.SendWarningTimeEndingSoon(email, "16.11.2022", dates);
 
         string[] date = new string[] { "01.12.2022" };
-        _s.SendWarningTimeEndingSoon(email, "16.11.2022", date);
+        success = _s.SendWarningTimeEndingSoon(email, "16.11.2022", date);
 
-        return "Email send";
+        return success ? "Emails sent" : "Emails could not be sent";
     }
 
     [HttpGet("KursNichtZustandeGekommen/{email}")]
     public string SendCourseFailed(string email) {
-        _s.SendNotificationCourseFailed(email, "Testkurs");
-        return "Email send";
+        return _s.SendNotificationCourseFailed(email, "Testkurs") ? "Email sent" : "Email could not be sent";
     }
 
     [HttpGet("LehrerKeinKursKeineZuteilung/{email}")]
     public string SendNoCourseNoAssignment(string email) {
-        _s.SendNotificationNoCourseOrNoAssignment(email);
-        return "Email send";
+        return _s.SendNotificationNoCourseOrNoAssignment(email) ? "Email sent" : "Email could not be sent";
     }
 
     [HttpGet("TestAlle/{email}")]
     public string SendAll(string email) {
+        bool success;
+
         _s.SendTestmail(email);
 
         _s.SendOfferChoosen(email, "imaginary offer", DateTime.Now.ToShortDateString());
@@ -76,8 +74,8 @@ public class TestMailController : Controller
 
         _s.SendNotificationCourseFailed(email, "Testkurs");
 
-        _s.SendNotificationNoCourseOrNoAssignment(email);
+        success = _s.SendNotificationNoCourseOrNoAssignment(email);
 
-        return "Emails send";
+        return success ? "Emails sent" : "Emails could not be sent";
     }
 }
