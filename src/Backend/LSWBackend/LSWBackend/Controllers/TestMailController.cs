@@ -31,7 +31,7 @@ public class TestMailController : Controller
 
     [HttpGet("ZeitraumEndet/{email}")]
     public string SendWarningEndingSoon(string email) {
-        var success = false;
+        bool success;
 
         //Mehrere Tage
         string[] dates = new string[] { "01.12.2022", "02.12.2022" };
@@ -55,7 +55,7 @@ public class TestMailController : Controller
 
     [HttpGet("TestAlle/{email}")]
     public string SendAll(string email) {
-        var success = false;
+        bool success;
 
         _s.SendTestmail(email);
 
