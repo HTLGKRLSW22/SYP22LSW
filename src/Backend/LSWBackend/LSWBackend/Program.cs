@@ -1,8 +1,35 @@
+using System.Text;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 string corsKey = "_myCorsKey";
 
 var builder = WebApplication.CreateBuilder(args);
 
+var appSettingsSection = builder.Configuration.GetSection("AppSettings");
+
+var appSettings = appSettingsSection.Get<AppSettings>();
+
+byte[]? key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
 #region -------------------------------------------- ConfigureServices
+builder.Services.AddAuthentication(x => {
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(x => {
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+
+    });
+builder.Services.Configure<AppSettings>(appSettingsSection);
 builder.Services.AddControllers();
 builder.Services.AddCors(options => options.AddPolicy(
     corsKey,
@@ -18,6 +45,11 @@ connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + P
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddHostedService<DatabaseBackgroundService>();
 
+builder.Services.AddScoped<OffersService>();
+builder.Services.AddScoped<StudentsService>();
+builder.Services.AddScoped<SendEmailsService>();
+builder.Services.AddScoped<EmailSenderService>();
+builder.Services.AddScoped<NoCourseNotifierService>();
 builder.Services.AddScoped<StudentsService>();
 
 #endregion
@@ -35,6 +67,8 @@ app.UseCors(corsKey);
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
