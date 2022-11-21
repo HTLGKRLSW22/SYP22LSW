@@ -13,10 +13,11 @@
       <tbody>
         <tr *ngFor="let item of allCourses">
           <td>{{item.title}}</td>
-          <td>{{dateConverter(item.courseDateBegin, item.courseDateEnd)}}</td>
-          <td>{{item.teacher}}</td>
+          <td>{{dateConverter(item.offerDates!)}}</td>
+          <td>{{item?.teacher?.lastName}}</td>
           <td>
-            <button (click)="deleteCourse(item.id)" class="btn btn-outline-danger" style="border: none;">
+            <button (click)="deleteCourse(item.offerId??0)" class="btn btn-outline-danger" style="border: none;">
+
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                    viewBox="0 0 16 16">
                 <path
@@ -26,7 +27,9 @@
               </svg>
             </button>
 
-            <button (click)="editCourse(item.id)" class="btn btn-outline-secondary" style="border: none;">
+
+            <button (click)="editCourse(item.offerId??0)" class="btn btn-outline-secondary" style="border: none;">
+
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                    class="bi bi-pencil-square" viewBox="0 0 16 16">
                 <path
