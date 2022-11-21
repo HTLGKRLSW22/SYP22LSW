@@ -1,7 +1,5 @@
 using System.Text;
 
-using LSWBackend.Services;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -47,7 +45,6 @@ connectionString = connectionString.Replace("|DataDirectory|", dataDirectory + P
 Console.WriteLine(connectionString);
 builder.Services.AddDbContext<LSWContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddHostedService<DatabaseBackgroundService>();
-builder.Services.AddScoped<StudentService>();
 
 
 #endregion
