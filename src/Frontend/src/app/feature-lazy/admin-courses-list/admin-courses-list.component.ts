@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OfferDate, OfferDto, OffersService, ReplyDTO } from 'src/app/swagger';
 
 @Component({
   selector: 'app-admin-courses-list',
@@ -7,42 +8,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminCoursesListComponent implements OnInit {
 
-  allCourses: CourseTestClass[] = [];
+  allCourses: OfferDto[] = [];
+
+  constructor(private offersService: OffersService) {}
 
   ngOnInit(): void {
     console.log('feature-lazy::admin-courses-list - Courses List works');
-    this.allCourses.push({id:1, title:'Basketball',courseDateBegin:'01.06.2023',courseDateEnd:'02.06.2023',teacher:'Grüneis'});
-    this.allCourses.push({id:2, title:'Klettern',courseDateBegin:'01.06.2023',courseDateEnd:'01.06.2023',teacher:'Mairinger'});
-    this.allCourses.push({id:3, title:'Schach',courseDateBegin:'03.06.2023',courseDateEnd:'03.06.2023',teacher:'Grüneis'});
-    this.allCourses.push({id:4, title:'Paintball',courseDateBegin:'02.06.2023',courseDateEnd:'03.06.2023',teacher:'Welsch'});    
+    this.offersService.offersGetOffersGet()
+      .subscribe((x: OfferDto[])=>{
+        this.allCourses = x;
+        console.table(x);
+      });
   }
 
-  deleteCourse(id: number): void {
-    console.log(`feature-lazy::admin-courses-list::deleteCourse - Button Delete clicked - id:${id}`);
+  deleteCourse(offerId: number): void {
+    console.log(`feature-lazy::admin-courses-list::deleteCourse - Button Delete clicked - offerId:${offerId}`);
+    this.offersService.offersDeleteOfferDelete(offerId)
+      .subscribe((x: ReplyDTO)=>{
+        console.table(x);
+        this.reloadField();
+      });
+    
   }
 
-  editCourse(id: number): void {
-    console.log(`feature-lazy::admin-courses-list::editCourse - Button Edit clicked - id:${id}`);
+  editCourse(offerId: number): void {
+    console.log(`feature-lazy::admin-courses-list::editCourse - Button Edit clicked - offerId:${offerId}`);
+    this.reloadField();
   }
   
-  dateConverter(dateBegin: string , dateEnd: string): string{
-    if(dateBegin!==dateEnd){
-      return `${dateBegin} - ${dateEnd}`;
+  dateConverter(offerdates: OfferDate[]): string{
+    if(offerdates.length === 0){
+      return '';
     }
-    return `${dateBegin}`;
+    if(offerdates[0]!==offerdates[offerdates.length-1]){
+      return `${offerdates[0].startDate} - ${offerdates[offerdates.length-1].startDate}`;
+    }
+    return `${offerdates[0].startDate}`;
   }
-}
-export interface OfferDto{
-  offerId: number,
-  title: string,
-  // offerDates: OfferDate[],
-  teacherId: number,
-  // teacher: Teacher,
-}
-export interface CourseTestClass{
-  id: number,
-  title: string,
-  courseDateBegin: string,
-  courseDateEnd: string,
-  teacher: string,
+
+  reloadField() : void{
+    this.offersService.offersGetOffersGet()
+      .subscribe((x: OfferDto[])=>{
+        this.allCourses = x;
+        console.table(x);
+      });
+  }
 }
