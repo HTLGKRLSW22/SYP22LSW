@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { OfferDate, OfferDto, OffersService, ReplyDTO } from 'src/app/swagger';
 
+
 @Component({
   selector: 'app-admin-courses-list',
   templateUrl: './admin-courses-list.component.html',
   styleUrls: ['./admin-courses-list.component.scss']
 })
 export class AdminCoursesListComponent implements OnInit {
+
 
   allCourses: OfferDto[] = [];
 
