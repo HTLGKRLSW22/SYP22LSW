@@ -5,7 +5,6 @@ import { ApiModule, BASE_PATH } from './swagger';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FeatureEagerModule } from './feature-eager/feature-eager.module';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -16,7 +15,6 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     HttpClientModule,
     ApiModule,
-    FeatureEagerModule,
     AppRoutingModule,
   ],
   providers: [
