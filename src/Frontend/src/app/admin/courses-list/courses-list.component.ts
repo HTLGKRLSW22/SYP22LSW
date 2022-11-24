@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {OfferDate, OfferDto, OffersService, ReplyDTO} from "../../swagger";
+import { OfferDate, OfferDto, OffersService, ReplyDTO } from '../../swagger';
 
 @Component({
   selector: 'app-courses-list',
@@ -10,12 +10,12 @@ export class CoursesListComponent implements OnInit {
 
   allCourses: OfferDto[] = [];
 
-  constructor(private offersService: OffersService) {}
+  constructor(private offersService: OffersService) { }
 
   ngOnInit(): void {
     console.log('admin::courses-list - Courses List works');
     this.offersService.offersGetOffersGet()
-      .subscribe((x: OfferDto[])=>{
+      .subscribe((x: OfferDto[]) => {
         this.allCourses = x;
         console.table(x);
       });
@@ -24,7 +24,7 @@ export class CoursesListComponent implements OnInit {
   deleteCourse(offerId: number): void {
     console.log(`admin::courses-list::deleteCourse - Button Delete clicked - offerId:${offerId}`);
     this.offersService.offersDeleteOfferDelete(offerId)
-      .subscribe((x: ReplyDTO)=>{
+      .subscribe((x: ReplyDTO) => {
         console.table(x);
         this.reloadField();
       });
@@ -35,19 +35,19 @@ export class CoursesListComponent implements OnInit {
     this.reloadField();
   }
 
-  dateConverter(offerdates: OfferDate[]): string{
-    if(offerdates.length === 0){
+  dateConverter(offerdates: OfferDate[]): string {
+    if (offerdates.length === 0) {
       return '';
     }
-    if(offerdates[0]!==offerdates[offerdates.length-1]){
-      return `${offerdates[0].startDate} - ${offerdates[offerdates.length-1].startDate}`;
+    if (offerdates[0] !== offerdates[offerdates.length - 1]) {
+      return `${offerdates[0].startDate} - ${offerdates[offerdates.length - 1].startDate}`;
     }
     return `${offerdates[0].startDate}`;
   }
 
-  reloadField() : void{
+  reloadField(): void {
     this.offersService.offersGetOffersGet()
-      .subscribe((x: OfferDto[])=>{
+      .subscribe((x: OfferDto[]) => {
         this.allCourses = x;
         console.table(x);
       });
