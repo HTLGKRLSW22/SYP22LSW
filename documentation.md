@@ -6,13 +6,29 @@ Es werden für jedes Objekt, welche in der Datenbank vorhanden sind DTOs erzeugt
 
 ## Routing
 
+> #### students/courses-list
+>
+> ![students/courses-list](documents\images\students_courses-list.png)
+
+---
+
+> #### students/priority-list
+>
+> ![students/priority-list](documents\images\students_priority-list.png)
+
+---
+
+> #### admin/search-students
+>
+> ![admin/search-students](documents\images\admin_search-students.png)
+
+---
+
 ## DTOs
 
 ### OfferDetailDto
 
 Dieses DTO wird verwendet bei den verschiedenen detailierten Kursanzeigen. (Siehe Bild)
-
-![OfferDetailDto](documents\images\offerDetailDto.png)
 
 | Name            | Type           | Description                                                                                                                                                         |
 | --------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -29,6 +45,8 @@ Dieses DTO wird verwendet bei den verschiedenen detailierten Kursanzeigen. (Sieh
 | Location        | string         | Veranstaltungsort des Kurses                                                                                                                                        |
 | MeetingPoint    | string         | Treffpunkt des Kurses. Treffpunkt des Kurses kann ja Unterschiedlich sein (z.B. Anfahrt zu Location ist mit Bus, Treffpunkt ist aber HTL, da dort der Bus wegfährt) |
 
+![OfferDetailDto](documents\images\offerDetailDto.png)
+
 ---
 
 ### OfferListDto
@@ -39,8 +57,6 @@ Dieses DTO wird verwendet bei den verschiedenen detailierten Kursanzeigen. (Sieh
 
 Dieses DTO wird verwendet bei der Admin Course Übersicht
 
-![OfferListDto](documents\images\offerListDto.png)
-
 | Name       | Type               | Description |
 | ---------- | ------------------ | ----------- |
 | OfferId    | int                | -           |
@@ -48,6 +64,8 @@ Dieses DTO wird verwendet bei der Admin Course Übersicht
 | OfferDates | List\<OfferDates\> | -           |
 | TeacherId  | int                | -           |
 | Teacher    | Teacher            | -           |
+
+![OfferListDto](documents\images\offerListDto.png)
 
 ---
 
@@ -74,6 +92,78 @@ Dieses DTO wird verwendet bei der Admin Course Übersicht
 
 ---
 
+### StudentsWithOfferDto
+
+| Name           | Type                      | Description |
+| -------------- | ------------------------- | ----------- |
+| StudentId      | int                       | -           |
+| FirstName      | string                    | -           |
+| LastName       | string                    | -           |
+| ClassName      | string                    | -           |
+| SelectedOffers | List<OfferOfStudentsDto\> | -           |
+
+![studentsWithOfferDto](documents\images\admin_students-list.png)
+
+![admin/search-students](documents\images\admin_search-students.png)
+
+---
+
+### OfferOfStudentsDto
+
+| Name      | Type   | Description |
+| --------- | ------ | ----------- |
+| DateTime  | Date   | -           |
+| OfferName | string | -           |
+
+---
+
+### LehrerListDto
+
+> #### 🔴🔴🔴 WARNING 🔴🔴🔴
+>
+> Habe ich das richtig verstanden mit dem Status? Oder wo genau bekommt man den sonst her?
+> **Wird noch geändert, nicht erstellen!**
+
+| Name    | Type               | Description                                                                                             |
+| ------- | ------------------ | ------------------------------------------------------------------------------------------------------- |
+| Teacher | TeacherDto[&nbsp;] | -                                                                                                       |
+| Status  | int                | Status kann Zahl sein zwischen 1 und 3. 1 = alles eingetragen, 2 = teilweise, 3 = gar nicht eingetragen |
+
+![LehrerListDto](documents\images\lehrerList.png)
+
+---
+
+### LehrerDetailDto
+
+> #### 🔴🔴🔴 WARNING 🔴🔴🔴
+>
+> Bitte überprüfen
+
+| Name       | Type     | Description |
+| ---------- | -------- | ----------- |
+| CourseName | string   | -           |
+| Date       | DateTime | -           |
+
+![LehrerDetailDto](documents\images\lehrerDetailDto.png)
+
+---
+
+### KlassenFilterListDto
+
+> #### 🔴🔴🔴 WARNING 🔴🔴🔴
+>
+> Student als Objekt übergeben? Wieder die Frage mit Status.
+
+| Name        | Type   | Description                                                                                             |
+| ----------- | ------ | ------------------------------------------------------------------------------------------------------- |
+| ClassName   | string | -                                                                                                       |
+| StudentName | string | -                                                                                                       |
+| Status      | int    | Status kann Zahl sein zwischen 1 und 3. 1 = alles eingetragen, 2 = teilweise, 3 = gar nicht eingetragen |
+
+![KlassenFilterList](documents\images\klassenFilterList.png)
+
+---
+
 ## Controller und Services
 
 ### OfferController & OfferService
@@ -82,26 +172,37 @@ Dieses DTO wird verwendet bei der Admin Course Übersicht
 >
 > **OfferDto** gehört noch umbenannt in **OfferListDto**
 
-| Controller | Service | Methodenname         | Returntyp                    | Parameter                   | HttpActionName  |
-| :--------: | :-----: | -------------------- | ---------------------------- | --------------------------- | --------------- |
-|     X      |         | GetOffers()          | IEnumerable\<OfferDto\>      | -                           | GetOffers       |
-|            |    X    | GetAllOffers()       | IEnumerable\<OfferDto\>      | -                           | -               |
-|     X      |         | DeleteOffers()       | ReplyDto                     | id: int                     | DeleteOffer     |
-|            |    X    | DeleteOfferById()    | ReplyDto                     | id: int                     | -               |
-|     X      |         | UpdateOffer()        | OfferListDto                 | offer: OfferListDto         | UpdateOffer     |
-|            |    X    | UpdateOffer()        | OfferListDto                 | dto: OfferListDto           | -               |
-|     X      |         | GetOfferDetails()    | IEnumerable<OfferDetailDto\> | studentId: int              | GetDetailOffers |
-|            |    X    | GetAllOfferDetails() | IEnumerable<OfferDetailDto\> | studentId: int              | -               |
-|     X      |         | CreateNewOffer()     | OfferDetailDto               | createOffer: CreateOfferDto | CreateOffer     |
-|            |    X    | CreateNewOffer()     | OfferDetailDto               | createOffer: CreateOfferDto | -               |
+| Controller | Service | Methodenname         | Returntyp                    | Parameter                   | HttpActionName  | Status |
+| :--------: | :-----: | -------------------- | ---------------------------- | --------------------------- | --------------- | :----: |
+|     X      |         | GetOffers()          | IEnumerable\<OfferDto\>      | -                           | GetOffers       |   🟢   |
+|            |    X    | GetAllOffers()       | IEnumerable\<OfferDto\>      | -                           | -               |   🟢   |
+|     X      |         | DeleteOffers()       | ReplyDto                     | id: int                     | DeleteOffer     |   🟢   |
+|            |    X    | DeleteOfferById()    | ReplyDto                     | id: int                     | -               |   🟢   |
+|     X      |         | UpdateOffer()        | OfferListDto                 | offer: OfferListDto         | UpdateOffer     |   🟢   |
+|            |    X    | UpdateOffer()        | OfferListDto                 | dto: OfferListDto           | -               |   🟢   |
+|     X      |         | GetOfferDetails()    | IEnumerable<OfferDetailDto\> | studentId: int              | GetDetailOffers |   🔴   |
+|            |    X    | GetAllOfferDetails() | IEnumerable<OfferDetailDto\> | studentId: int              | -               |   🔴   |
+|     X      |         | CreateNewOffer()     | OfferDetailDto               | createOffer: CreateOfferDto | CreateOffer     |   🔴   |
+|            |    X    | CreateNewOffer()     | OfferDetailDto               | createOffer: CreateOfferDto | -               |   🔴   |
+
+---
+
+### LehrerController & LehrerService
+
+| Controller | Service | Methodenname      | Returntyp                      | Parameter     | HttpActionName  | Status |
+| :--------: | :-----: | ----------------- | ------------------------------ | ------------- | --------------- | :----: |
+|     X      |         | GetLehrerList()   | IEnumerable\<LehrerListDto\>   |               | GetLehrerList   |   🔴   |
+|            |    X    | GetLehrerList()   | IEnumerable\<LehrerListDto\>   |               | -               |   🔴   |
+|     X      |         | GetLehrerDetail() | IEnumerable\<LehrerDetailDto\> | lehrerID: int | GetLehrerDetail |   🔴   |
+|            |    X    | GetLehrerDetail() | IEnumerable\<LehrerDetailDto\> | lehrerID: int | -               |   🔴   |
 
 ---
 
 ### FreistellungsController & FreistellungsService
 
-| Controller | Service | Methodenname      | Returntyp                        | Parameter                          | HttpActionName |
-| :--------: | :-----: | ----------------- | -------------------------------- | ---------------------------------- | -------------- |
-|     X      |         | SetFreistellung() | ActionResult\<FreistellungsDto\> | freistellungsDto: FreistellungsDto | [action]       |
-|            |    X    | SetFreistellung() | bool                             | freistellungsDto: FreistellungsDto | -              |
+| Controller | Service | Methodenname      | Returntyp                        | Parameter                          | HttpActionName | Status |
+| :--------: | :-----: | ----------------- | -------------------------------- | ---------------------------------- | -------------- | :----: |
+|     X      |         | SetFreistellung() | ActionResult\<FreistellungsDto\> | freistellungsDto: FreistellungsDto | [action]       |   🔴   |
+|            |    X    | SetFreistellung() | bool                             | freistellungsDto: FreistellungsDto | -              |   🔴   |
 
 ---
