@@ -17,10 +17,10 @@ public class OffersService
     public IEnumerable<OfferListDto> GetAllOffers() {
         return _db.Offers.Include(x => x.Teacher).Include(y => y.OfferDates).Select(x => new OfferListDto {
             OfferId = x.OfferId,
-            TeacherId = x.TeacherId,
-            Teacher = new TeacherDto().CopyPropertiesFrom(x.Teacher!),
-            OfferDates = x.OfferDates,
-            Title = x.Title
+            OfferDates = x.OfferDates.Select(y => new OfferDateDto().CopyPropertiesFrom(y)).ToList(),
+            Title = x.Title,
+            TeacherFirstname = x.Teacher!.FirstName,
+            TeacherLastname = x.Teacher!.LastName,
         }).ToList();
     }
 
