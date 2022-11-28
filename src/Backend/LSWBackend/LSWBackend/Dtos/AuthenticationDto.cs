@@ -1,4 +1,4 @@
-﻿namespace LSWBackend.Dtos;
+namespace LSWBackend.Dtos;
 
 public class AuthenticationDto
 {

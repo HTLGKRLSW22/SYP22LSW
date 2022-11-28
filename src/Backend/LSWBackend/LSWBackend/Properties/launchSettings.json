@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -11,8 +11,7 @@
   "profiles": {
     "LSWBackend": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7171;http://localhost:5171",
       "environmentVariables": {
