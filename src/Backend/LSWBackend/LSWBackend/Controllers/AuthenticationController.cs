@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
@@ -20,13 +20,13 @@ public class AuthenticationController : ControllerBase
 
     public AuthenticationController(IOptions<AppSettings> appSettings) => _appSettings = appSettings.Value;
 
-    [HttpGet("login")]
-    public ActionResult<string[]> Login(string username) {
-        //username und passwort wird von der B Klasse abgeprüft hierfür brauche ich dann nur einen get request der true oder false zurückgibt
-        //HttpResponseMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:44300/api/authentication/login?{username}{password}");
+    [HttpPost("login")]
+    public ActionResult<string[]> Login([FromBody] LoginDto login) {
+        //login und passwort wird von der B Klasse abgeprüft hierfür brauche ich dann nur einen get request der true oder false zurückgibt
+        //HttpResponseMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:44300/api/authentication/login?{login}{password}");
         //ID Username
 
-        var teacher = new Teacher() { Username = username, IsAdmin = 1, FirstName = "test", LastName = "test", TeacherId = 1 };
+        var teacher = new Teacher() { Username = login.Username, IsAdmin = 1, FirstName = "test", LastName = "test", TeacherId = 1 };
 
         string token = CreateTokenString(teacher);
 
