@@ -1,4 +1,4 @@
-﻿namespace LSWBackend.Dtos;
+namespace LSWBackend.Dtos;
 
 public class AuthenticationDto
 {
@@ -8,3 +8,4 @@ public class AuthenticationDto
     [Required] public int IsAdmin { get; set; }
     [Required] public string Token { get; set; }
 }
+
