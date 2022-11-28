@@ -14,7 +14,7 @@ public class DatabaseBackgroundService : BackgroundService
         var db = scope.ServiceProvider.GetRequiredService<LSWContext>();
         db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
-        InitPases(db);
+        InitPhases(db);
         Console.WriteLine("Database created...");
         if (!db.Teachers.Any()) {
             InitializeDb(db);
@@ -24,7 +24,7 @@ public class DatabaseBackgroundService : BackgroundService
     }
 
 
-    private static void InitPases(LSWContext db) {
+    private static void InitPhases(LSWContext db) {
         db.Phases.AddRange(new List<Phase> {
             new Phase { PhaseId = 1, PhaseEndDate = null },
             new Phase { PhaseId = 2, PhaseEndDate = null },
