@@ -1,15 +1,13 @@
 ﻿using System;
-namespace LSWBackend.Dtos
-{
-    public class OfferTeacherDto
-    {
-        public OfferTeacherDto()
-        {
-        }
+namespace LSWBackend.Dtos;
 
-        [Required] public int OfferTeacherId { get; set; }
-        [Required] public int TeacherId { get; set; }
-        [Required] public int OfferId { get; set; }
+public class OfferTeacherDto
+{
+    public OfferTeacherDto() {
     }
+
+    [Required] public int OfferTeacherId { get; set; }
+    [Required] public int TeacherId { get; set; }
+    [Required] public int OfferId { get; set; }
 }
 

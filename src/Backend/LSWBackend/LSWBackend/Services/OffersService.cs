@@ -49,17 +49,13 @@ public class OffersService
         return dto;
     }
 
-    public bool CheckOfferFull(OfferListDto dto)
-    {
+    public bool CheckOfferFull(OfferListDto dto) {
         bool reply = false;
         int studentNum = _db.StudentOffers.Select(x => x.OfferId).Where(x => dto.OfferId == x).Sum();
         int minNum = _db.Offers.Single(x => x.OfferId == dto.OfferId).MinStudents;
-        if(studentNum >= minNum)
-        {
+        if (studentNum >= minNum) {
             _db.StudentOffers.Include(x => x.Student).Include(x => x.Offer).Select(x => x).ToList().ForEach(x =>
-            {
-                _emailService.SendNotificationCourseFailed($"{x.Student.Username}@sus.htl-grieskirchen.at", x.Offer.Title); 
-            });
+                _emailService.SendNotificationCourseFailed($"{x.Student.Username}@sus.htl-grieskirchen.at", x.Offer.Title));
             reply = true;
         }
         return reply;
