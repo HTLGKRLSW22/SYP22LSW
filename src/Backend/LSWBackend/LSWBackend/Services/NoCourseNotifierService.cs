@@ -5,17 +5,15 @@ public class NoCourseNotifierService
     private readonly LSWContext _db;
     private readonly SendEmailsService _sendEmailsService;
 
-    public NoCourseNotifierService(LSWContext db, SendEmailsService _emailService) {
+    public NoCourseNotifierService(LSWContext db, SendEmailsService emailService) {
         _db = db;
-        _sendEmailsService = _emailService;
+        _sendEmailsService = emailService;
     }
 
     public void NotifiyAllStudentsWithoutEnrollment(string endDate) {
         var students = GetStudentsWithoutEnrollment();
 
-        students.ToList().ForEach(x => {
-            _sendEmailsService.SendWarningTimeEndingSoon($"{x.Key.Username}@sus.htl-grieskirchen.at", endDate, x.Value.Select(x => x.ToString("dd.MM.yyyy")).ToArray());
-        });
+        students.ToList().ForEach(x => _sendEmailsService.SendWarningTimeEndingSoon($"{x.Key.Username}@sus.htl-grieskirchen.at", endDate, x.Value.Select(x => x.ToString("dd.MM.yyyy")).ToArray()));
     }
 
     private Dictionary<Student, List<DateTime>> GetStudentsWithoutEnrollment() {
@@ -43,10 +41,10 @@ public class NoCourseNotifierService
             var offerDates = x.Value.Select(x => x.StartDate.Date).Distinct();
             var missingDates = requiredDates.Except(offerDates).ToList();
 
-            if (missingDates.Count() == 0) {
+            if (missingDates.Count == 0) {
                 studentsWithoutEnrollment.Remove(x.Key);
             }
-            else if (missingDates.Count() > 0) {
+            else if (missingDates.Count > 0) {
                 studentsWithoutEnrollment[x.Key] = missingDates;
             }
         });
