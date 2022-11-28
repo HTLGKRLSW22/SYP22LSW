@@ -14,12 +14,23 @@ public class DatabaseBackgroundService : BackgroundService
         var db = scope.ServiceProvider.GetRequiredService<LSWContext>();
         db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
+        InitPhases(db);
         Console.WriteLine("Database created...");
         if (!db.Teachers.Any()) {
             InitializeDb(db);
             Console.WriteLine("Database initialized...");
         }
         return Task.Run(() => { }, stoppingToken);
+    }
+
+
+    private static void InitPhases(LSWContext db) {
+        db.Phases.AddRange(new List<Phase> {
+            new Phase { PhaseId = 1, PhaseEndDate = null },
+            new Phase { PhaseId = 2, PhaseEndDate = null },
+            new Phase { PhaseId = 3, PhaseEndDate = null },
+        });
+        db.SaveChanges();
     }
 
 
