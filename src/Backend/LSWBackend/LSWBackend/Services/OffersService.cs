@@ -7,8 +7,12 @@ namespace LSWBackend.Services;
 public class OffersService
 {
     private readonly LSWContext _db;
+    private readonly SendEmailsService _emailService;
 
-    public OffersService(LSWContext db) => _db = db;
+    public OffersService(LSWContext db, SendEmailsService service) {
+        _db = db;
+        _emailService = service;
+    }
 
     public IEnumerable<OfferListDto> GetAllOffers() {
         return _db.Offers.Include(x => x.Teacher).Include(y => y.OfferDates).Select(x => new OfferListDto {
@@ -52,10 +56,9 @@ public class OffersService
         int minNum = _db.Offers.Single(x => x.OfferId == dto.OfferId).MinStudents;
         if(studentNum >= minNum)
         {
-            SendEmailsService service = new SendEmailsService(new EmailSenderService());
             _db.StudentOffers.Include(x => x.Student).Include(x => x.Offer).Select(x => x).ToList().ForEach(x =>
             {
-                service.SendNotificationCourseFailed($"{x.Student.Username}@sus.htl-grieskirchen.at", x.Offer.Title); 
+                _emailService.SendNotificationCourseFailed($"{x.Student.Username}@sus.htl-grieskirchen.at", x.Offer.Title); 
             });
             reply = true;
         }
