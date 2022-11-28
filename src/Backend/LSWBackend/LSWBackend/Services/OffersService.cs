@@ -10,14 +10,17 @@ public class OffersService
 
     public OffersService(LSWContext db) => _db = db;
 
-    public IEnumerable<OfferDto> GetAllOffers() {
-        return _db.Offers.Include(x => x.Teacher).Include(y => y.OfferDates).Select(x => new OfferDto {
-            OfferId = x.OfferId,
-            TeacherId = x.TeacherId,
-            Teacher = x.Teacher,
-            OfferDates = x.OfferDates,
-            Title = x.Title
-        }).ToList();
+    public IEnumerable<OfferDetailDto> GetAllOffers() {
+        //return _db.Offers.Include(x => x.Teacher).Include(y => y.OfferDates).Select(x => new OfferDetailDto {
+        //    OfferId = x.OfferId,
+        //    TeacherId = x.TeacherId,
+        //    Teacher = x.Teacher,
+        //    OfferDates = x.OfferDates,
+        //    Title = x.Title
+        //}).ToList();
+
+        return new List<OfferDetailDto>();
+        // TODO gierlinger fix des
     }
 
     public ReplyDTO DeleteOfferById(int id) {
@@ -38,11 +41,11 @@ public class OffersService
         return reply;
     }
 
-    public OfferDto UpdateOffer(OfferDto dto) {
-        var offer = _db.Offers.Single(x => x.OfferId == dto.OfferId);
-        offer = new Offer().CopyPropertiesFrom(dto);
+    public OfferDetailDto UpdateOffer(OfferDetailDto detailDto) {
+        var offer = _db.Offers.Single(x => x.OfferId == detailDto.OfferId);
+        offer = new Offer().CopyPropertiesFrom(detailDto);
         _db.SaveChanges();
-        return dto;
+        return detailDto;
 
     }
 }

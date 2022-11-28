@@ -6,38 +6,49 @@ public class CoursesService
 
     public CoursesService(LSWContext db) => _db = db;
 
-    public Offer EditCourse(int id, OfferPutDto offerPutDto) {
+    public OfferDetailDto EditCourse(int id, OfferPutDto offerPutDto) {
         try {
-            var courseToEdit = _db.Offers.Single(x => x.OfferId == id);
+            var courseToEdit = _db.Offers
+                .Include(x => x.StudentOffers)
+                .Include(x => x.OfferDates)
+                .Include(x => x.OfferTeachers)
+                .ThenInclude(x => x.Teacher)
+                .Single(x => x.OfferId == id);
             courseToEdit.CopyPropertiesFrom(offerPutDto);
             _db.SaveChanges();
-            return courseToEdit;
+            return new OfferDetailDto() {
+                TeacherNames = courseToEdit.OfferTeachers.Select(y => $"{y.Teacher.FirstName} {y.Teacher.LastName}").ToArray(),
+                StartDates = courseToEdit.OfferDates.Select(y => y.StartDate).ToArray(),
+                EndDates = courseToEdit.OfferDates.Select(y => y.EndDate).ToArray(),
+                CurrentCount = courseToEdit.StudentOffers.Count
+            }.CopyPropertiesFrom(courseToEdit);
         }
         catch (InvalidOperationException) {
-            return new Offer { OfferId = -1 };
+            return new OfferDetailDto { OfferId = -1 };
         }
         catch (DbUpdateException) {
-            return new Offer { OfferId = -2 };
+            return new OfferDetailDto { OfferId = -2 };
         }
     }
 
-    public IEnumerable<OfferDto> GetTeacherCourses(int teacherId) {
+    public IEnumerable<OfferDetailDto> GetTeacherCourses(int teacherId) {
         try {
             return _db.Offers
+                .Include(x => x.StudentOffers)
                 .Include(x => x.OfferDates)
-                .Include(x => x.Teacher)
+                .Include(x => x.OfferTeachers)
+                .ThenInclude(x => x.Teacher)
                 .Where(x => x.TeacherId == teacherId)
-                .Select(x => new OfferDto {
-                    OfferId = x.OfferId,
-                    TeacherId = x.TeacherId,
-                    Teacher = x.Teacher,
-                    OfferDates = x.OfferDates,
-                    Title = x.Title
-                })
+                .Select(x => new OfferDetailDto {
+                    TeacherNames = x.OfferTeachers.Select(y => $"{y.Teacher.FirstName} {y.Teacher.LastName}").ToArray(),
+                    StartDates = x.OfferDates.Select(y => y.StartDate).ToArray(),
+                    EndDates = x.OfferDates.Select(y => y.EndDate).ToArray(),
+                    CurrentCount = x.StudentOffers.Count
+                }.CopyPropertiesFrom(x))
                 .ToList();
         }
         catch (Exception ex) {
-            return new List<OfferDto>();
+            return new List<OfferDetailDto>();
         }
     }
 

@@ -9,7 +9,7 @@ public class OffersController : ControllerBase
     public OffersController(OffersService serv) => _service = serv;
 
     [HttpGet("GetOffers")]
-    public IEnumerable<OfferDto> GetOffers() {
+    public IEnumerable<OfferDetailDto> GetOffers() {
         Console.WriteLine("Get Offers -- Getting all Offers");
         return _service.GetAllOffers();
     }
@@ -21,9 +21,9 @@ public class OffersController : ControllerBase
     }
 
     [HttpPut("UpdateOffer")]
-    public OfferDto UpdateOffer([FromBody] OfferDto offer) {
-        Console.WriteLine("Update Offer - Updating Offer with Id: " + offer.OfferId);
-        return _service.UpdateOffer(offer);
+    public OfferDetailDto UpdateOffer([FromBody] OfferDetailDto offerDetail) {
+        Console.WriteLine("Update Offer - Updating Offer with Id: " + offerDetail.OfferId);
+        return _service.UpdateOffer(offerDetail);
     }
 
 }
