@@ -11,7 +11,6 @@ public class WaitingListsController : ControllerBase
     [Authorize(Roles = "admin,student")]
     [HttpPut]
     public ActionResult<WaitingListDto> RemoveStudent(int waitingListId) {
-        this.Log();
         if (waitingListId < 0) return BadRequest("WaitingListId incorrect!");
         bool isStudent = User.Claims.Single(x => x.Type == ClaimTypes.Role).Value == "Student";
         int studentId = -1;
@@ -27,7 +26,6 @@ public class WaitingListsController : ControllerBase
     [Authorize(Roles = "admin,student")]
     [HttpPost]
     public ActionResult<WaitingListDto> AddStudent(int studentId, int offerId) {
-        this.Log();
         if (studentId < 0 || offerId < 0) return BadRequest("StudentId or OfferId incorrect!");
         bool isStudent = User.Claims.Single(x => x.Type == ClaimTypes.Role).Value == "Student";
         if (isStudent) {

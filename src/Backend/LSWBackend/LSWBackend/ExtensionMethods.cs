@@ -21,20 +21,4 @@ public static class ExtensionMethods
           });
         return target;
     }
-
-    public static void Log(this ControllerBase controller, string msg = "", [CallerMemberName] string callerMethod = "") {
-        //Note: Color output requires "launchBrowser": false in launchSettings.json
-        Console.BackgroundColor = ConsoleColor.Gray;
-        Console.ForegroundColor = ConsoleColor.Black;
-        Console.Write($"{DateTime.Now:HH:mm:ss.ff}");
-        Console.BackgroundColor = ConsoleColor.Black;
-        string method = controller.Request.HttpContext.Request.Method;
-        Console.ForegroundColor = method == "GET" ? ConsoleColor.Green : method == "DELETE" ? ConsoleColor.Red : ConsoleColor.Cyan;
-        Console.Write($" {controller.Request.HttpContext.Request.Method} ");
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write($"{controller.Request.HttpContext.Request.Path}{controller.Request.QueryString} ");
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine($"{callerMethod} {msg}");
-        Console.ResetColor();
-    }
 }
