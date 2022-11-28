@@ -3,27 +3,54 @@
 public class NoCourseNotifierService
 {
     private readonly LSWContext _db;
+    private readonly SendEmailsService _sendEmailsService;
 
-    public NoCourseNotifierService(LSWContext db) => _db = db;
-
-
-    private List<Student> GetStudentsWithoutEnrollment() {
-        var dates = _db.OfferDates;
-
-        return _db.Students
-             .Include(x => x.StudentOffers)
-             .ThenInclude(x => x.Offer)
-             .ThenInclude(x => x.OfferDates)
-             .Where(x => x.StudentOffers.Count == 0 || !IsStudentEnrolledOnAllDays(x))
-             .ToList();
+    public NoCourseNotifierService(LSWContext db, SendEmailsService _emailService) {
+        _db = db;
+        _sendEmailsService = _emailService;
     }
 
-    private static bool IsStudentEnrolledOnAllDays(Student student) {
-        return student.StudentOffers.SelectMany(x => x.Offer.OfferDates).ToList().Count < 3;
-    }
-
-    public void NotifyStudentsWithoutEnrollment() {
+    public void NotifiyAllStudentsWithoutEnrollment(string endDate) {
         var students = GetStudentsWithoutEnrollment();
-        students.ForEach(x => Console.WriteLine($"{x.LastName}"));
+
+        students.ToList().ForEach(x => {
+            _sendEmailsService.SendWarningTimeEndingSoon($"{x.Key.Username}@sus.htl-grieskirchen.at", endDate, x.Value.Select(x => x.ToString("dd.MM.yyyy")).ToArray());
+        });
+    }
+
+    private Dictionary<Student, List<DateTime>> GetStudentsWithoutEnrollment() {
+        var requiredDates = _db.AvailableDates.Select(x => x.Date.Date).ToList();
+
+        var studentsWithoutEnrollment = _db.Students.ToDictionary(x => x, x => requiredDates);
+
+        var studentOfferDates = new Dictionary<Student, List<OfferDate>>();
+
+        _db.StudentOffers
+             .Include(x => x.Offer)
+             .ThenInclude(x => x.OfferDates)
+             .Include(x => x.Student)
+             .ToList()
+             .ForEach(x => {
+                 if (studentOfferDates.ContainsKey(x.Student)) {
+                     studentOfferDates[x.Student].AddRange(x.Offer.OfferDates);
+                 }
+                 else {
+                     studentOfferDates.Add(x.Student, x.Offer.OfferDates);
+                 }
+             });
+
+        studentOfferDates.ToList().ForEach(x => {
+            var offerDates = x.Value.Select(x => x.StartDate.Date).Distinct();
+            var missingDates = requiredDates.Except(offerDates).ToList();
+
+            if (missingDates.Count() == 0) {
+                studentsWithoutEnrollment.Remove(x.Key);
+            }
+            else if (missingDates.Count() > 0) {
+                studentsWithoutEnrollment[x.Key] = missingDates;
+            }
+        });
+
+        return studentsWithoutEnrollment;
     }
 }
