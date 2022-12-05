@@ -26,6 +26,7 @@ public class LSWContext : DbContext
     public DbSet<Priority> Priorities { get; set; } = null!;
     public DbSet<TeacherLesson> TeacherLessons { get; set; } = null!;
     public DbSet<AvailableDate> AvailableDates { get; set; } = null!;
+    public DbSet<Phase> Phases { get; set; } = null!;
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
