@@ -1,4 +1,4 @@
-﻿namespace LSWBackend.Services;
+namespace LSWBackend.Services;
 
 public class NoCourseNotifierService
 {
