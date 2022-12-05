@@ -52,7 +52,6 @@ builder.Services.AddScoped<EmailSenderService>();
 builder.Services.AddScoped<NoCourseNotifierService>();
 builder.Services.AddScoped<StudentsService>();
 builder.Services.AddScoped<FreistellungsService>();
-builder.Services.AddScoped<FileUploadService>();
 
 #endregion
 
