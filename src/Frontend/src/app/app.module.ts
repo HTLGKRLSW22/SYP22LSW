@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FeatureEagerModule } from './feature-eager/feature-eager.module';
 import { environment } from 'src/environments/environment';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     HttpClientModule,
     ApiModule,
+    SharedModule,
     FeatureEagerModule,
     AppRoutingModule,
   ],
