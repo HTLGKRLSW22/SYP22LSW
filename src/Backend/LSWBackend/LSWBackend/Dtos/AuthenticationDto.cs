@@ -8,3 +8,4 @@ public class AuthenticationDto
     [Required] public int IsAdmin { get; set; }
     [Required] public string Token { get; set; } = null!;
 }
+
