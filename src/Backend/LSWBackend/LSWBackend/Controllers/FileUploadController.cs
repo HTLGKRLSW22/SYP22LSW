@@ -2,31 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LSWBackend.Controllers
+namespace LSWBackend.Controllers;
+
+[Produces("application/json")]
+[Route("[controller]")]
+[ApiController]
+public class FileUploadController : ControllerBase
 {
-    [Produces("application/json")]
-    [Route("[controller]")]
-    [ApiController]
-    public class FileUploadController : ControllerBase
-    {
-        private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly FileUploadService _service;
+    private readonly IWebHostEnvironment _host;
+    private readonly FileUploadService _serv;
 
-        public FileUploadController(IWebHostEnvironment enviroment, FileUploadService service)
-        {
-            this._hostingEnvironment = enviroment;
-            this._service = service;
-        }
-
-        [HttpPost("File/Post")]
-        [DisableRequestSizeLimit]
-        public ActionResult UploadCSVFile()
-        {
-            return _service.uploadFile(Request.Form.Files[0], _hostingEnvironment, ".csv");
-        }
-
+    public FileUploadController(IWebHostEnvironment env, FileUploadService serv) {
+        _host = env;
+        _serv = serv;
     }
+
+    [HttpPost("File/Post")]
+    [DisableRequestSizeLimit]
+    public ActionResult UploadCSVFile() {
+        return _serv.UploadFile(Request.Form.Files[0], _host, ".csv");
+    }
+
 }

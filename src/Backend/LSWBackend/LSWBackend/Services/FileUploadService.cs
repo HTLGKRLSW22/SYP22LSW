@@ -1,51 +1,38 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using System.IO;
+using System.Net.Http.Headers;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LSWBackend.Services
+namespace LSWBackend.Services;
+
+public class FileUploadService
 {
-    public class FileUploadService
-    {
 
-        public ActionResult uploadFile(IFormFile file, IWebHostEnvironment hostEnvironment, string fileExt)
-        {
-            try
-            {
-                if (Path.GetExtension(file.FileName) == fileExt)
-                {
-                    var folderName = "csv-Uploads";
-                    string webRootPath = hostEnvironment.WebRootPath;
-                    string fullPath = Path.Combine(webRootPath, folderName);
+    public ActionResult UploadFile(IFormFile file, IWebHostEnvironment hostEnvironment, string fileExt) {
+        try {
+            if (Path.GetExtension(file.FileName) == fileExt) {
+                string path = Path.Combine(hostEnvironment.WebRootPath, "InitData");
 
-                    if (!Directory.Exists(fullPath))
-                    {
-                        Directory.CreateDirectory(fullPath);
-                    }
-
-                    if (file.Length > 0)
-                    {
-                        string fName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName!.Trim('"');
-                        string wholePath = Path.Combine(fullPath, fName);
-                        using (var stream = new FileStream(wholePath, FileMode.Create))
-                        {
-                            file.CopyTo(stream);
-                        }
-                    }
-                    return new JsonResult("Upload Succesfull");
+                if (!Directory.Exists(path)) {
+                    Directory.CreateDirectory(path);
                 }
-                else
-                {
-                    return new JsonResult("Upload Failed: Only .csv is accepted");
+                if (file.Length > 0) {
+                    var stream = new FileStream(Path.Combine(path, ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName!.Trim('"')), FileMode.Create);
+                    file.CopyTo(stream);
                 }
-            }catch(Exception e)
-            {
-                return new JsonResult("Upload Failed: " + e.Message);
+                return new JsonResult("Upload Succesfull");
             }
-            
-        } 
+            else {
+                return new JsonResult("Upload Failed: Only .csv is accepted");
+            }
+        }
+        catch (Exception e) {
+            return new JsonResult("Upload Failed: " + e.Message);
+        }
 
     }
+
 }
 
