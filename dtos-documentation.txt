@@ -1,0 +1,92 @@
+OfferDto (Ansicht vom Schüler und Lehrer(CourseComponent)) 
+	- Titel: string
+	- Beschreibung: string | null
+	- Lehrer : string[] (an stelle 0 Hauptlehrer)
+	- Preis : double | null
+	- Startdatum : string[]
+	- Enddatum : string[]
+	- CurrentCount : int
+	- MaxCount : int
+	- MinCount : int
+	- Location : string | null
+	- MeetingPoint : string | null
+	- Eingetragen : boolean | null
+	
+	
+CreateOfferDto
+	- Titel: string
+	- Beschreibung: string | null
+	- Preis : double | null
+	- Startdatum : string[]
+	- Enddatum : string[]
+	- MaxCount : int
+	- MinCount : int
+	- Location : string | null
+	- MeetingPoint : string | null 
+	- Klassen : string [] (Wenn leer dann alle)
+
+EnrollInCourse (Schüler und Lehrer)
+	- Id : int
+	- CourseId : int
+
+StudentDto (Alle Schüler und deren Status wird angezeigt)
+	- Name : string
+	- Klasse : string
+	- CourseStatus : int (0 = nicht eingetragen; 1 = teilweise; 2 = vollständig eingetragen)
+	
+LehrerDto (Alle Lehrer und deren Status wird angezeigt)
+	- Name : string
+	- CourseStatus : int (0 = nicht eingetragen; 1 = teilweise; 2 = vollständig eingetragen )
+
+LehrerDetailDto (Admin Lehrer Detail View)
+	- Kurse : string[] (Im Array wird das Datum und der Kursname mit Leerzeichen getrennt ans Frontend gegeben)
+	
+OfferSimpleDto
+	- KursName : string
+	- Startdatum : string
+	- Enddatum : string
+	- LehrerName : string
+
+FreistellungenDto
+	- StudentId : int
+	- CourseId : int
+
+
+Schüler_View
+	- OfferDto[] pro Tag
+	- Wenn einschreiben dann mit Post(EnrollInCourse)
+	- Austragen Delete Request
+	
+Lehrer_View
+	- OfferDto[] pro Tag
+	- Wenn einschreiben dann mit Post(EnrollInCourse)
+	- Austragen Delete Request
+
+Lehrer_Create_Course
+	- Post mit CreateOfferDto
+
+Admin_Schüler_List
+	- StudentDto[] mit Get
+	
+Admin_Lehrer_List
+	- LehrerDto[] mit Get 
+
+Admin_Lehrer_Detail
+	- LehrerDetailDto mit Get und Id vom Lehrer
+	
+
+Lehrer_Inspect_Course_View
+	- Man holt sich die StudentDto[] für einen bestimmten Kurs
+	- anderen Details sind im Frontend schon vorhanden
+	
+Meine_Kurs_View
+	- OfferDto[] mit (Studentid) holen
+	
+Admin_Kurs_View
+	- OfferSimpleDto[] 
+	
+Admin/Lehrer_Edit_Course
+	- Put mit CreateOfferDto
+	
+Freistellungen 
+	- FreistellungenDto
