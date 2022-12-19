@@ -38,7 +38,7 @@ public class EmailSenderService
     }
 
     public bool SendMail(string recieverAddress, string subject, string message) {
-        
+
         try {
             var mail = new MailMessage {
                 From = new MailAddress(_credentials[0], _appSettings.EmailAlias),
@@ -54,7 +54,7 @@ public class EmailSenderService
             Console.WriteLine($"ERROR: Failed to send Mail: {e.Message}");
             return false;
         }
-        
+
     }
 
     public async Task SendMailAsync() {

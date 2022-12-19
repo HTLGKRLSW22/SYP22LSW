@@ -42,7 +42,7 @@ public class AuthenticationController : ControllerBase
             Token = token,
             Username = teacher.Username
         });
-        
+
         //student
         //return Ok(new AuthenticationDto() {
         //    Id = student.StudentId,
@@ -50,7 +50,7 @@ public class AuthenticationController : ControllerBase
         //    Token = token2,
         //    Username = student.Username
         //});
-        
+
         //admin
         //return Ok(new AuthenticationDto() {
         //    Id = admin.TeacherId,
@@ -78,7 +78,7 @@ public class AuthenticationController : ControllerBase
         string tokenString = tokenHandler.WriteToken(token);
         return tokenString;
     }
-    
+
     //private string CreateTokenString(Student student) {
     //    var tokenHandler = new JwtSecurityTokenHandler();
     //    byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
