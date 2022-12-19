@@ -8,8 +8,7 @@ public class FreistellungsService
 {
     private readonly LSWContext _db;
     private readonly SendEmailsService _email;
-    public FreistellungsService(LSWContext db, SendEmailsService email)
-    {
+    public FreistellungsService(LSWContext db, SendEmailsService email) {
         _db = db;
         _email = email;
     }
