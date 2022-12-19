@@ -9,3 +9,4 @@ $light-border-color: rgb(237, 237, 237);
 $light-bg-color: rgb(245, 245, 245);
 
 $error-color: rgb(232, 42, 90);
+$light-error-color: saturate(lighten($error-color, 40), 10);

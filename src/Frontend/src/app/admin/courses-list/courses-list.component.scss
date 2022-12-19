@@ -1,12 +1,76 @@
+@import '../../../colorVars.scss';
+:host {
+    width: 100%;
+    height: 100%;
+}
 .table{
-  text-align: center;
-  background-color: #f2f6ff;
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+    tr {
+        border: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &:nth-child(odd) {
+            background-color: $text-side-background-highlighted;
+            .edit-course-button {
+                &:hover {
+                    background-color: darken($text-side-background-highlighted, 2);
+                }
+            }
+        }
+        td, th {
+            width: 100%;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        th {
+            font-size: 20px;
+        }
+    }
+    .c-btn {
+        padding: 5px;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        margin: 5px;
+    }
+    .delete-course-button {
+        background-color: $light-error-color;
+        svg {
+            fill: $error-color;
+        }
+        &:hover {
+            background-color: $error-color;
+            svg {
+                fill: white;
+            }
+        }
+    }
+    .edit-course-button {
+        background-color: transparent;
+        svg {
+            fill: rgba(0, 0, 0, 0.5);
+        }
+        &:hover {
+            background-color: rgb(247, 247, 247);
+            svg {
+                fill: black;
+            }
+        }
+    }
 }
 
 .title{
   font-weight: bold;
 }
 
-.coursesList{
-  margin: 50px;
+.coursesList {
+    padding: 50px 100px;
 }
