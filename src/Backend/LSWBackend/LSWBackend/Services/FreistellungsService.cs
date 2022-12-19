@@ -6,11 +6,17 @@ namespace LSWBackend.Services;
 
 public class FreistellungsService
 {
-
     private readonly LSWContext _db;
-    public FreistellungsService(LSWContext db) => _db = db;
+    private readonly SendEmailsService _email;
+    public FreistellungsService(LSWContext db, SendEmailsService email)
+    {
+        _db = db;
+        _email = email;
+    }
 
     public bool SetFreistellung(FreistellungsDto freistellungsDto) {
+
+
         Student? student = _db.Students.Include(x => x.StudentOffers)
             .ThenInclude(x => x.Offer)
             .ThenInclude(x => x.OfferDates)
@@ -26,6 +32,7 @@ public class FreistellungsService
                     StudentId = student.StudentId,
                 });
                 _db.SaveChanges();
+                _email.SendAbcence($"{student.Username}@sus.htl-grieskirchen.at", freistellung.OfferDates[0].StartDate.Date.ToString());
                 return true;
             }
             else if (student != null) {
@@ -44,6 +51,7 @@ public class FreistellungsService
                     StudentId = student.StudentId,
                 });
                 _db.SaveChanges();
+                _email.SendAbcence($"{student.Username}@sus.htl-grieskirchen.at", freistellung.OfferDates[0].StartDate.Date.ToString());
                 return true;
             }
         }
