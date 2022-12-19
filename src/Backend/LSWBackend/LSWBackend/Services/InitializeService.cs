@@ -27,7 +27,7 @@ public class InitializeService
     public List<string> InitializeTeachers() {
         List<string> errorMessages = new();
         var teachers = ReadFile("teachers.csv");
-       
+
         if (teachers[0][0].ToLower() != "id" || teachers[0][1].ToLower() != "benutzername"
             || teachers[0][2].ToLower() != "nachname" || teachers[0][3].ToLower() != "vorname") {
             throw new Exception("Die Datei entspricht nicht dem vorgegebenen Format: Id;Benutzername;Nachname;Vorname");
@@ -35,7 +35,7 @@ public class InitializeService
 
         foreach (var teacher in teachers) {
             if (teacher[1].ToLower() == AdminUsername) continue;
-            if(teacher.Length != 4) {
+            if (teacher.Length != 4) {
                 errorMessages.Add($"Ungültiges Format bei Lehrer: {teacher[0]}");
                 continue;
             }
@@ -70,7 +70,7 @@ public class InitializeService
 
         foreach (var student in students) {
             var clazz = clazzes.FirstOrDefault(x => x.ClazzName == student[0]);
-            if(clazz == null) {
+            if (clazz == null) {
                 Teacher? teacher = GetTeacher(student[1]);
 
                 if (teacher == null)
@@ -119,7 +119,7 @@ public class InitializeService
         return teacherName.Length < 2
             ? null
             : _db.Teachers
-                .FirstOrDefault(x => $"{x.FirstName} {x.LastName}".ToLower() 
+                .FirstOrDefault(x => $"{x.FirstName} {x.LastName}".ToLower()
                                   == $"{teacherNameParts[teacherNameParts.Length - 2]} {teacherNameParts.Last()}".ToLower());
     }
 
