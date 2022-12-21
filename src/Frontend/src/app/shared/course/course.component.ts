@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { OfferDto } from 'src/app/models/offerDto';
 
 @Component({
   selector: 'app-course',
@@ -6,24 +7,13 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
-  @Input() title: string | null = null;
-  @Input() description: string | null = null;
-  @Input() teachers: string[] | null = null;
-  @Input() price: number | null = null;
-  @Input() startDates: string[] | null = null;
-  @Input() endDates: string[] | null = null;
-  @Input() currentCount: number | null = null;
-  @Input() maxCount: number | null = null;
-  @Input() minCount: number | null = null;
-  @Input() location: string | null = null;
-  @Input() meetingPoint : string | null = null;
-  @Input() enrolled: boolean | null = null;
+  @Input() offerDto: OfferDto | null = null;
 
   percentage: number | null = null;
   days: string[] = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
 
   ngOnInit(): void {
-    this.percentage = (this.currentCount??-1) / (this.maxCount??-1);
+    this.percentage = (this.offerDto?.currentCount??-1) / (this.offerDto?.maxCount??-1);
   }
 
   onBtnEnterCourseClick(): void {
