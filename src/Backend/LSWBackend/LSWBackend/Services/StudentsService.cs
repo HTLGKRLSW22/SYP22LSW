@@ -1,4 +1,6 @@
-﻿namespace LSWBackend.Services;
+﻿using System.Linq;
+
+namespace LSWBackend.Services;
 
 public class StudentsService
 {
@@ -37,5 +39,21 @@ public class StudentsService
                 OfferName = offerDates.FirstOrDefault(y => y.StartDate.Date == x.Date.Date)?.Offer.Title ?? "-",
             })
             .ToList();
+    }
+
+    public List<StudentWithOffersDto> GetClassOfTeacher(int teacherId) {
+        Console.WriteLine(teacherId);
+        return _db.Students.Include(x => x.Clazz).Include(x => x.StudentOffers).ThenInclude(x => x.Offer).ThenInclude(x => x.OfferDates).Where(x => x.Clazz.TeacherId == teacherId).Select(x => new StudentWithOffersDto() {
+            ClassName = x.Clazz.ClazzName,
+            FirstName = x.FirstName,
+            LastName = x.LastName,
+            StudentId = x.StudentId,
+            SelectedOffers = x.StudentOffers.Select(j => new OfferOfStudentDto {
+                Date = j.Offer.OfferDates[0].StartDate,
+                OfferName = j.Offer.Title,
+            }).ToList(),
+            IsFreigestellt = x.StudentOffers.Count() == 0 ? false : x.StudentOffers[0].Offer.VisibleForStudents == 0
+        }).ToList(); 
+
     }
 }

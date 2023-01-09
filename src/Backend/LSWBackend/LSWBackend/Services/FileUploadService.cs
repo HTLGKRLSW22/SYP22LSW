@@ -13,7 +13,7 @@ public class FileUploadService
     public ActionResult UploadFile(IFormFile file, IWebHostEnvironment hostEnvironment, string fileExt) {
         try {
             if (Path.GetExtension(file.FileName) == fileExt) {
-                string path = Path.Combine(hostEnvironment.WebRootPath, "InitData");
+                string path = "InitData";
 
                 if (!Directory.Exists(path)) {
                     Directory.CreateDirectory(path);
@@ -21,6 +21,8 @@ public class FileUploadService
                 if (file.Length > 0) {
                     var stream = new FileStream(Path.Combine(path, ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName!.Trim('"')), FileMode.Create);
                     file.CopyTo(stream);
+                    stream.Flush();
+                    stream.Close();
                 }
                 return new JsonResult("Upload Succesfull");
             }

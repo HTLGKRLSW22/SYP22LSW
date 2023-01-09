@@ -13,4 +13,10 @@ public class StudentsController : ControllerBase
     public List<StudentWithOffersDto> GetStudentsWithOffers() {
         return _studentsService.GetStudentsWithOffers();
     }
+
+    [HttpGet("GetClassOfTeacher")]
+    public List<StudentWithOffersDto> GetClassOfTeacher(int teacherId) {
+        return _studentsService.GetClassOfTeacher(teacherId);
+    }
+
 }
