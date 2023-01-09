@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CheckboxRequiredValidator } from '@angular/forms';
 
 @Component({
   selector: 'app-klassenviewpopup',
@@ -7,33 +8,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KlassenviewpopupComponent implements OnInit {
 
-  montag: boolean = false;
-  constructor() { }
+  monday = false;
+  tuesday = false;
+  wednesday = false;
+
+  // constructor() { }
 
   ngOnInit(): void {
-   
-
+    console.log('classview popup works');
   }
 
-  clickallesauswaehlen(): void 
+  clickselectall(): void 
   {
-    var element = <HTMLInputElement> document.getElementById("montag");
-    var element2 = <HTMLInputElement> document.getElementById("dienstag");
-    var element3 = <HTMLInputElement> document.getElementById("mittwoch");
-
-
-    if( element.checked == true && element2.checked == true && element3.checked == true )
+    
+    if(this.monday === false && this.tuesday === false && this.wednesday === false)
     {
-      element.checked= false;
-      element2.checked= false;
-      element3.checked= false;
+      this.monday = true;
+      this.tuesday = true;
+      this.wednesday= true;
     }
-     else
-     {
-      element.checked= true;
-      element2.checked= true;
-      element3.checked= true;
-     }
+    else
+    {
+      this.monday = false;
+      this.tuesday = false;
+      this.wednesday= false;
+    }
   }
 
 }
