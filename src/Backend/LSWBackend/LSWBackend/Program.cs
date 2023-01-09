@@ -55,6 +55,7 @@ builder.Services.AddScoped<FreistellungsService>();
 builder.Services.AddScoped<InitializeService>();
 builder.Services.AddScoped<FileUploadService>();
 builder.Services.AddScoped<CourseFailedNotifierService>();
+builder.Services.AddScoped<TeacherService>();
 
 #endregion
 
