@@ -77,5 +77,4 @@ public class OffersController : ControllerBase
             ? BadRequest("Student does not exist in given offer")
             : Ok();
     }
-
 }
