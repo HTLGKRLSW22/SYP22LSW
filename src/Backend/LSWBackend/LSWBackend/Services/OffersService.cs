@@ -60,4 +60,56 @@ public class OffersService
         }
         return reply;
     }
+
+    public StudentOffer? AddStudentToOffer(int studentId, int offerId) {
+        var offer = _db.Offers.Include(x => x.StudentOffers).Include(x => x.OfferDates).SingleOrDefault(x => x.OfferId == offerId);
+        var student = _db.Students.Include(x => x.Clazz).Include(x => x.StudentOffers).ThenInclude(x => x.Offer).ThenInclude(x => x.OfferDates).SingleOrDefault(x => x.StudentId == studentId);
+        if (student == null || offer == null) return new StudentOffer { OfferId = -1 }; //if student/offer doesn't exist
+        if (offer.StudentOffers.Select(x => x.StudentId).Contains(studentId)) return null; //check if student is already in offer
+        bool alreadyInCourse = false;
+        student.StudentOffers.Select(x => x.Offer.OfferDates.Select(y => y.StartDate.Date)).ToList().ForEach(z => z.ToList().ForEach(xy => {
+            if (offer.OfferDates.Select(yz => yz.StartDate.Date).Contains(xy)) alreadyInCourse = true;
+        }));
+        _db.ClassOffers.Where(x => x.ClazzId == student.ClazzId).Select(x => x.Offer.OfferDates.Select(y => y.StartDate.Date)).ToList().ForEach(z => z.ToList().ForEach(xy => {
+            if (offer.OfferDates.Select(yz => yz.StartDate.Date).Contains(xy)) alreadyInCourse = true;
+        }));
+        if (alreadyInCourse) {
+            return null;
+        }
+        else {
+            _db.ClassOffers.Select(x => x.ClazzId).Contains(student.ClazzId);
+        }
+        var studentOffer = new StudentOffer { OfferId = offerId, StudentId = studentId };
+        _db.StudentOffers.Add(studentOffer);
+        _db.SaveChanges();
+        return studentOffer;
+    }
+
+    public StudentOffer? RemoveStudentFromOffer(int studentId, int offerId) {
+        var offer = _db.Offers.Include(x => x.StudentOffers).SingleOrDefault(x => x.OfferId == offerId);
+        var student = _db.Students.Include(x => x.StudentOffers).SingleOrDefault(x => x.StudentId == studentId);
+        if (student == null || offer == null) return null; //if student/offer doesn't exist
+        var studentOffer = _db.StudentOffers.SingleOrDefault(x => x.StudentId == studentId && x.OfferId == offerId);
+        try {
+            _db.StudentOffers.Remove(studentOffer);
+        }
+        catch (ArgumentNullException) {
+            return new StudentOffer { OfferId = -1 }; //Student does not exist in given offer
+        }
+        _db.SaveChanges();
+        return studentOffer;
+    }
+
+    public void RemoveStudentFromOfferOnDay(int studentId, int offerId) {
+        var offer = _db.Offers.Include(x => x.StudentOffers).Include(x => x.OfferDates).SingleOrDefault(x => x.OfferId == offerId);
+        var student = _db.Students.Include(x => x.Clazz).Include(x => x.StudentOffers).ThenInclude(x => x.Offer).ThenInclude(x => x.OfferDates).SingleOrDefault(x => x.StudentId == studentId);
+        if (student != null && offer != null) {
+
+            student!.StudentOffers.ToList().ForEach(x => x.Offer.OfferDates.Select(y => y.StartDate.Date).ToList().ForEach(xy => {
+                if (offer!.OfferDates.Select(xz => xz.StartDate.Date).Contains(xy)) _db.StudentOffers.Remove(x);
+            }));
+        }
+        _db.SaveChanges();
+
+    }
 }
