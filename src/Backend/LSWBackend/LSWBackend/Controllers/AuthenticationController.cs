@@ -38,7 +38,7 @@ public class AuthenticationController : ControllerBase
         return Ok(new AuthenticationDto() {
             Id = teacher.TeacherId,
             IsAdmin = teacher.IsAdmin,
-            Role = "student",
+            Role = "teacher",
             Token = token,
             Username = teacher.Username
         });
@@ -46,7 +46,7 @@ public class AuthenticationController : ControllerBase
         //student
         //return Ok(new AuthenticationDto() {
         //    Id = student.StudentId,
-        //    Role = "teacher",
+        //    Role = "student",
         //    Token = token2,
         //    Username = student.Username
         //});
