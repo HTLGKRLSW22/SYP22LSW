@@ -5,6 +5,14 @@
 export const environment = {
   production: false,
   apiRoot: 'https://localhost:5001',
+  viewRouting: 'view',
+  teacherRouting: 'teacher',
+  studentRouting: 'student',
+  newCourse: 'new-course',
+  adminDragAndDrop: 'upload-drag-and-drop',
+  adminCoursesList: 'courses-list',
+  adminStudentsList: 'students-view',
+  adminTeachersList: 'teachers-view',
 };
 
 /*

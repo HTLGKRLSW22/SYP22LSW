@@ -26,7 +26,7 @@ public class AuthenticationController : ControllerBase
         //HttpResponseMessage request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:44300/api/authentication/login?{login}{password}");
         //ID Username
 
-        var teacher = new Teacher() { Username = login.Username, IsAdmin = 0, FirstName = "test", LastName = "test", TeacherId = 1 };
+        var teacher = new Teacher() { Username = login.Username, IsAdmin = 0, FirstName = "test", LastName = "test", TeacherId = 2 };
         //var student = new Student() { Username = login.Username, FirstName = "test", LastName = "test", StudentId = 1 };
         //var admin = new Teacher() { Username = login.Username, IsAdmin = 1, FirstName = "test", LastName = "test", TeacherId = 1 };
 
@@ -38,11 +38,11 @@ public class AuthenticationController : ControllerBase
         return Ok(new AuthenticationDto() {
             Id = teacher.TeacherId,
             IsAdmin = teacher.IsAdmin,
-            Role = "student",
+            Role = "teacher",
             Token = token,
             Username = teacher.Username
         });
-        
+
         //student
         //return Ok(new AuthenticationDto() {
         //    Id = student.StudentId,
@@ -50,12 +50,12 @@ public class AuthenticationController : ControllerBase
         //    Token = token2,
         //    Username = student.Username
         //});
-        
+
         //admin
         //return Ok(new AuthenticationDto() {
         //    Id = admin.TeacherId,
         //    IsAdmin = admin.IsAdmin,
-        //    Role = "student",
+        //    Role = "admin",
         //    Token = token3,
         //    Username = admin.Username
         //});
@@ -69,7 +69,7 @@ public class AuthenticationController : ControllerBase
             {
                 new Claim(ClaimTypes.NameIdentifier, teacher.TeacherId.ToString()),
                 new Claim(ClaimTypes.Name, teacher.Username),
-                new Claim( ClaimTypes.Role,"student"),
+                new Claim(ClaimTypes.Role, teacher.IsAdmin == 0 ? "teacher" : "admin")
             }),
             Expires = DateTime.UtcNow.AddHours(4),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -78,7 +78,7 @@ public class AuthenticationController : ControllerBase
         string tokenString = tokenHandler.WriteToken(token);
         return tokenString;
     }
-    
+
     //private string CreateTokenString(Student student) {
     //    var tokenHandler = new JwtSecurityTokenHandler();
     //    byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -87,7 +87,7 @@ public class AuthenticationController : ControllerBase
     //        {
     //            new Claim(ClaimTypes.NameIdentifier, student.StudentId.ToString()),
     //            new Claim(ClaimTypes.Name, student.Username),
-    //            new Claim( ClaimTypes.Role,"student"),
+    //            new Claim(ClaimTypes.Role,"student"),
     //        }),
     //        Expires = DateTime.UtcNow.AddHours(4),
     //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
