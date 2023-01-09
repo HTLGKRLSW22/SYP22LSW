@@ -31,4 +31,8 @@ export class AuthService {
     sessionStorage.removeItem('userToken');
     localStorage.removeItem('userToken');
   }
+
+  public isLoggedIn():boolean {
+    return typeof sessionStorage.getItem('userToken') === 'string' || typeof localStorage.getItem('userToken') === 'string';
+  }
 }
