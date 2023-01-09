@@ -1,0 +1,5 @@
+<!-- DaySelectComponent -->
+<h2 class="d-flex align-items-center justify-content-center">Kurse für <b>{{selectedDate}}</b></h2>
+<div class="courses" *ngFor="let offer of offers">
+    <app-course [offerDto]="offer"></app-course>
+</div>
