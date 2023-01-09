@@ -21,6 +21,7 @@ import { TeacherModule } from './teacher/teacher.module';
     ApiModule,
     SharedModule,
     LoginModule,
+    
     StudentModule,
     TeacherModule,
     AppRoutingModule,
