@@ -23,14 +23,12 @@ public class CoursesService
             courseToEdit.MaxStudents = offerPutDto.MaxCount;
             courseToEdit.MinStudents = offerPutDto.MinCount;
 
-            if (offerPutDto.Startdatum != null && offerPutDto.Enddatum != null && offerPutDto.Startdatum.Count == offerPutDto.Enddatum.Count) {
+            if (offerPutDto.Startdatum.Count > 0 && offerPutDto.Startdatum.Count == offerPutDto.Enddatum.Count) {
                 courseToEdit.OfferDates.Clear();
                 List<OfferDate> offerDates = new();
                 for (var i = 0; i < offerPutDto.Startdatum.Count; i++) {
-                    DateTime startDate;
-                    DateTime endDate;
                     // avoid api crash using tryparse
-                    if (DateTime.TryParse(offerPutDto.Startdatum[i], out startDate) && DateTime.TryParse(offerPutDto.Enddatum[i], out endDate)) {
+                    if (DateTime.TryParse(offerPutDto.Startdatum[i], out var startDate) && DateTime.TryParse(offerPutDto.Enddatum[i], out var endDate)) {
                         offerDates.Add(new OfferDate {
                             StartDate = startDate,
                             EndDate = endDate
@@ -41,7 +39,15 @@ public class CoursesService
             }
 
             // set classes
-            if (offerPutDto.Klassen != null) {
+            if (offerPutDto.Klassen.Count == 0) {
+                // add all classes
+                courseToEdit.ClassOffers.Clear();
+                courseToEdit.ClassOffers = _db.Clazzes.Select(x => new ClassOffer {
+                    Clazz = x,
+                    OfferId = courseToEdit.OfferId,
+                }).ToList();
+            }
+            else {
                 courseToEdit.ClassOffers.Clear();
                 List<ClassOffer> classOffers = new();
                 foreach (var clazzName in offerPutDto.Klassen) {
