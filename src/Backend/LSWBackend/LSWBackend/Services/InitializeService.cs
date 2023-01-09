@@ -127,7 +127,7 @@ public class InitializeService
 
     private Teacher? GetTeacher(string teacherName) {
         var teacherNameParts = teacherName.Split(" ");
-        teacherName = $"{teacherNameParts[teacherNameParts.Length - 2]} {teacherNameParts[teacherNameParts.Length - 1]}".ToLower();
+        teacherName = $"{teacherNameParts[^2]} {teacherNameParts[^1]}".ToLower();
         return teacherNameParts.Length < 2
             ? null
             : _db.Teachers

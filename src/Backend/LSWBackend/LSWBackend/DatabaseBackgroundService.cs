@@ -41,6 +41,8 @@ public class DatabaseBackgroundService : BackgroundService
     }
 
 
+
+#pragma warning disable IDE0051 // Remove unused private members
     private static void InitializeDb(LSWContext db) {
         db.Teachers.AddRange(LoadTeachers());
         db.SaveChanges();
@@ -61,6 +63,7 @@ public class DatabaseBackgroundService : BackgroundService
         db.StudentOffers.AddRange(LoadStudentOffers());
         db.SaveChanges();
     }
+#pragma warning restore IDE0051 // Remove unused private members
 
 
     private static List<Teacher> LoadTeachers() {

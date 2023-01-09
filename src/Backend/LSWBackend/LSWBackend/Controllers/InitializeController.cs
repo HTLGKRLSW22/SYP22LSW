@@ -34,7 +34,7 @@ public class InitializeController : ControllerBase
 
 
     [HttpDelete("Reset")]
-    public ActionResult<string> ResetDatabase() { 
+    public ActionResult<string> ResetDatabase() {
         _initializeService.ResetDatabase();
         return Ok("Die Datenbank wurde zurückgesetzt");
     }
