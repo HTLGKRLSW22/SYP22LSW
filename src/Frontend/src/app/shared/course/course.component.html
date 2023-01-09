@@ -1,0 +1,81 @@
+<div class="card">
+    <div class="card-header d-flex justify-content-center align-items-center">
+        <div class="d-flex justify-content-between align-items-center w-25">
+            <h3><b>{{offerDto?.title??'-'}}</b></h3>
+            <div class="d-flex flex-column teachers justify-content-center ms-3">
+                <h6>von {{offerDto?.teachers![0]}}</h6>
+                <p style="font-size: 12px;">{{offerDto?.teachers! | showTeachers}}</p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end align-items-center w-75">
+            <div class="d-flex flex-column align-items-end">
+                <h6 *ngFor="let startDate of offerDto?.startDates">{{startDate | showTimesForDates:offerDto?.endDates??[]:days}}</h6>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-flex">
+            <table>
+                <tr>
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pin-map-fill m-3" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z"/>
+                            <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"/>
+                        </svg>
+                    </td>
+                    <td>
+                        <h5 class="card-title m-3">{{offerDto?.meetingPoint??'-'}}</h5>
+                    </td>
+
+                    <td *ngIf="offerDto?.description !== null">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                        </svg>
+                    </td>
+                    <td *ngIf="offerDto?.description !== null">
+                        <h5 class="card-title m-3">Information</h5>
+                    </td>
+
+                    <td *ngIf="offerDto?.price !== null">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                        </svg>
+                    </td>
+                    <td *ngIf="offerDto?.price !== null">
+                        <h5 class="card-title m-3">Preis</h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><p class="card-text m-2">{{offerDto?.location??'-'}}</p></td>
+
+                    <td *ngIf="offerDto?.description !== null"></td>
+                    <td *ngIf="offerDto?.description !== null"><p class="card-text m-2">{{offerDto?.description??'-'}}</p></td>
+
+                    <td *ngIf="offerDto?.price !== null"></td>
+                    <td *ngIf="offerDto?.price !== null"><p class="card-text m-2">{{offerDto?.price??-1 | currency:'EUR':true}}</p></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="progress progress-bar-size" *ngIf="percentage! < 0.75">
+                <div class="progress-bar bg-success" role="progressbar" aria-label="Success" [style]="'width: ' + (percentage | percent)"></div>
+            </div>
+            <div class="progress progress-bar-size" *ngIf="percentage! >= 0.75 && percentage! < 1">
+                <div class="progress-bar bg-warning" role="progressbar" aria-label="Warning" [style]="'width: ' + (percentage | percent)"></div>
+            </div>
+            <div class="progress progress-bar-size" *ngIf="percentage === 1">
+                <div class="progress-bar bg-danger" role="progressbar" aria-label="Danger" [style]="'width: ' + (percentage | percent)"></div>
+            </div>
+
+            <button class="btn btn-outline-success btnLogin" *ngIf="offerDto?.enrolled === null || !offerDto?.enrolled" (click)="onBtnEnterCourseClick()">Einschreiben</button>
+            <button class="btn btn-outline-danger btnLogin" *ngIf="offerDto?.enrolled !== null && offerDto?.enrolled" (click)="onBtnLeaveCourseClick()">Ausschreiben</button>
+        </div>
+    
+        <div class="d-flex justify-content-center align-items-center">
+            <h6>{{offerDto?.currentCount??-1}}</h6>
+            <h5>/{{offerDto?.maxCount??-1}}</h5>
+        </div>
+    </div>
+</div>
