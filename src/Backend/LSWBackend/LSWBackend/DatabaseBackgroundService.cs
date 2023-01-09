@@ -17,7 +17,14 @@ public class DatabaseBackgroundService : BackgroundService
         InitPhases(db);
         Console.WriteLine("Database created...");
         if (!db.Teachers.Any()) {
-            InitializeDb(db);
+            //InitializeDb(db);
+            db.Teachers.Add(new Teacher {
+                IsAdmin = 1,
+                FirstName = "Josef",
+                LastName = "Doppelbauer",
+                Username = "doppj",
+            });
+            db.SaveChanges();
             Console.WriteLine("Database initialized...");
         }
         return Task.Run(() => { }, stoppingToken);
@@ -34,6 +41,8 @@ public class DatabaseBackgroundService : BackgroundService
     }
 
 
+
+#pragma warning disable IDE0051 // Remove unused private members
     private static void InitializeDb(LSWContext db) {
         db.Teachers.AddRange(LoadTeachers());
         db.SaveChanges();
@@ -54,6 +63,7 @@ public class DatabaseBackgroundService : BackgroundService
         db.StudentOffers.AddRange(LoadStudentOffers());
         db.SaveChanges();
     }
+#pragma warning restore IDE0051 // Remove unused private members
 
 
     private static List<Teacher> LoadTeachers() {

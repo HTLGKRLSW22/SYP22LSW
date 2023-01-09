@@ -1,4 +1,4 @@
-﻿namespace LSWBackend.Services;
+namespace LSWBackend.Services;
 
 public class InitializeService
 {
@@ -11,11 +11,21 @@ public class InitializeService
 
 
     public void ResetDatabase() {
-        _db.Teachers.RemoveRange(
-            _db.Teachers
-            .Where(x => x.Username.ToLower() != AdminUsername)
-            .ToList());
-        _db.SaveChanges();
+        _db.Database.ExecuteSqlRaw("DELETE FROM offerDates;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM teacherLessons;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM offerTeachers;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM classOffers;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM studentOffers;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM priorities;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM waitingLists;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM students;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM clazzes;");
+        _db.Database.ExecuteSqlRaw($"DELETE FROM teachers WHERE LOWER(username) != '{AdminUsername}';");
+        _db.Database.ExecuteSqlRaw("DELETE FROM reportImages;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM reports;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM offers;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM phases;");
+        _db.Database.ExecuteSqlRaw("DELETE FROM availableDates;");
     }
 
 
@@ -33,7 +43,7 @@ public class InitializeService
             throw new Exception("Die Datei entspricht nicht dem vorgegebenen Format: Id;Benutzername;Nachname;Vorname");
         }
 
-        foreach (var teacher in teachers) {
+        foreach (var teacher in teachers.Skip(1)) {
             if (teacher[1].ToLower() == AdminUsername) continue;
             if (teacher.Length != 4) {
                 errorMessages.Add($"Ungültiges Format bei Lehrer: {teacher[0]}");
@@ -62,13 +72,13 @@ public class InitializeService
 
         if (students[0][0].ToLower() != "klasse" || students[0][1].ToLower() != "klassenvorstand"
             || students[0][2].ToLower() != "familienname" || students[0][3].ToLower() != "vorname"
-            || students[0][2].ToLower() != "email 1 (schüler)") {
+            || students[0][4].ToLower() != "email 1 (schüler)") {
             throw new Exception("Die Datei entspricht nicht dem vorgegebenen Format: Klasse;Klassenvorstand;Familienname;Vorname;Email 1 (Schueler)");
         }
 
         List<Clazz> clazzes = new();
 
-        foreach (var student in students) {
+        foreach (var student in students.Skip(1)) {
             var clazz = clazzes.FirstOrDefault(x => x.ClazzName == student[0]);
             if (clazz == null) {
                 Teacher? teacher = GetTeacher(student[1]);
@@ -97,6 +107,7 @@ public class InitializeService
                     LastName = lastName,
                     FirstName = firstName,
                     Username = username,
+                    Clazz = clazz,
                 };
 
                 _db.Students.Add(studentToAdd);
@@ -116,11 +127,11 @@ public class InitializeService
 
     private Teacher? GetTeacher(string teacherName) {
         var teacherNameParts = teacherName.Split(" ");
-        return teacherName.Length < 2
+        teacherName = $"{teacherNameParts[^2]} {teacherNameParts[^1]}".ToLower();
+        return teacherNameParts.Length < 2
             ? null
             : _db.Teachers
-                .FirstOrDefault(x => $"{x.FirstName} {x.LastName}".ToLower()
-                                  == $"{teacherNameParts[teacherNameParts.Length - 2]} {teacherNameParts.Last()}".ToLower());
+                .FirstOrDefault(x => x.FirstName.ToLower() + " " + x.LastName.ToLower() == teacherName);
     }
 
 }
