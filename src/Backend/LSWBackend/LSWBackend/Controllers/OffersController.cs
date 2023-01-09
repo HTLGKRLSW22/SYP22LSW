@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace LSWBackend.Controllers;
 
 [Route("[controller]")]
@@ -8,8 +10,9 @@ public class OffersController : ControllerBase
 
     public OffersController(OffersService serv) => _service = serv;
 
+    [Authorize(Roles = "admin")]
     [HttpGet("GetOffers")]
-    public IEnumerable<OfferListDto> GetOffers() {
+    public IEnumerable<OfferSimpleDto> GetOffers() {
         Console.WriteLine("Get Offers -- Getting all Offers");
         return _service.GetAllOffers();
     }

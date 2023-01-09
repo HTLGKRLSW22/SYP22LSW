@@ -14,20 +14,20 @@ public class OffersService
         _emailService = service;
     }
 
-    public IEnumerable<OfferListDto> GetAllOffers() {
-        return _db.Offers.Include(x => x.Teacher).Include(y => y.OfferDates).Select(x => new OfferListDto {
-            OfferId = x.OfferId,
-            OfferDates = x.OfferDates.Select(y => new OfferDateDto().CopyPropertiesFrom(y)).ToList(),
-            Title = x.Title,
-            TeacherFirstname = x.Teacher!.FirstName,
-            TeacherLastname = x.Teacher!.LastName,
+    public IEnumerable<OfferSimpleDto> GetAllOffers() {
+        return _db.Offers.Include(x => x.Teacher).Include(y => y.OfferDates).Select(x => new OfferSimpleDto {
+            Enddatum = $"{x.OfferDates[x.OfferDates.Count - 1].EndDate : 'dd.MM.yyyy HH:mm'}",
+            Startdatum = $"{x.OfferDates[x.OfferDates.Count - 1].StartDate: 'dd.MM.yyyy HH:mm'}",
+            KursName = x.Title,
+            LehrerName = $"{x.Teacher!.LastName} {x.Teacher!.FirstName}"
+            
         }).ToList();
     }
 
     public ReplyDTO DeleteOfferById(int id) {
         var reply = new ReplyDTO {
-            IsOK = true,
-            ErrorMessage = ""
+            isOk = true,
+            message = ""
         };
 
         try {
@@ -35,8 +35,8 @@ public class OffersService
             _db.SaveChanges();
         }
         catch (Exception e) {
-            reply.IsOK = false;
-            reply.ErrorMessage = e.Message;
+            reply.isOk = false;
+            reply.message = e.Message;
         }
 
         return reply;

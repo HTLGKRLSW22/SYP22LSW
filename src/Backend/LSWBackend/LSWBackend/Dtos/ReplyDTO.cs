@@ -1,12 +1,10 @@
 ﻿using System;
-namespace LSWBackend.Dtos;
-
-public class ReplyDTO
+namespace LSWBackend.Dtos
 {
-    public ReplyDTO() {
+    public class ReplyDTO
+    {
+        public string message { get; set; }
+        public bool isOk { get; set; }
     }
-
-    public bool IsOK { get; set; }
-    public string? ErrorMessage { get; set; }
 }
 
