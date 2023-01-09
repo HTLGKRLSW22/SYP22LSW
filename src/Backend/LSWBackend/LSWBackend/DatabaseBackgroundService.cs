@@ -17,7 +17,14 @@ public class DatabaseBackgroundService : BackgroundService
         InitPhases(db);
         Console.WriteLine("Database created...");
         if (!db.Teachers.Any()) {
-            InitializeDb(db);
+            //InitializeDb(db);
+            db.Teachers.Add(new Teacher {
+                IsAdmin = 1,
+                FirstName = "Josef",
+                LastName = "Doppelbauer",
+                Username = "doppj",
+            });
+            db.SaveChanges();
             Console.WriteLine("Database initialized...");
         }
         return Task.Run(() => { }, stoppingToken);
