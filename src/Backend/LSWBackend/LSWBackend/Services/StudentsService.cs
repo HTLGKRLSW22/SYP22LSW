@@ -38,4 +38,50 @@ public class StudentsService
             })
             .ToList();
     }
+
+
+    public List<OfferDto> GetNotFullOffers() {
+        //get all classoffers
+        var classOffers = _db.ClassOffers
+            .Include(x => x.Offer)
+            .ThenInclude(x => x.OfferDates)
+            .Include(x => x.Offer)
+            .ThenInclude(x => x.StudentOffers)
+            .Select(x => new OfferDto {
+                TeacherNames = x.Offer.OfferTeachers.Select(y => $"{y.Teacher.FirstName} {y.Teacher.LastName}").ToArray(),
+                StartDates = x.Offer.OfferDates.Select(y => y.StartDate).ToArray(),
+                EndDates = x.Offer.OfferDates.Select(y => y.EndDate).ToArray(),
+                CurrentCount = x.Offer.StudentOffers.Count
+            }.CopyPropertiesFrom(x.Offer))
+                    .ToList();
+
+        //get all offers and remove all classOffers
+        var offers = _db.Offers
+            .Include(x => x.OfferDates)
+            .Include(x => x.StudentOffers)
+            .Select(x => new OfferDto {
+                TeacherNames = x.OfferTeachers.Select(y => $"{y.Teacher.FirstName} {y.Teacher.LastName}").ToArray(),
+                StartDates = x.OfferDates.Select(y => y.StartDate).ToArray(),
+                EndDates = x.OfferDates.Select(y => y.EndDate).ToArray(),
+                CurrentCount = x.StudentOffers.Count
+            }.CopyPropertiesFrom(x))
+                    .ToList();
+        var notFullOffers = offers.Where(x => !classOffers.Any(y => y.OfferId == x.OfferId)).ToList();
+
+        //var offers = _db.Offers
+        //    .Where(x => x.MaxStudents > x.StudentOffers.Count && x.OfferDates.Count == 1)
+        //    .Include(x => x.OfferDates)
+        //    .Include(x => x.StudentOffers)
+        //    .Select(x => new OfferDto {
+        //        TeacherNames = x.OfferTeachers.Select(y => $"{y.Teacher.FirstName} {y.Teacher.LastName}").ToArray(),
+        //        StartDates = x.OfferDates.Select(y => y.StartDate).ToArray(),
+        //        EndDates = x.OfferDates.Select(y => y.EndDate).ToArray(),
+        //        CurrentCount = x.StudentOffers.Count
+        //    }.CopyPropertiesFrom(x))
+        //    .ToList();
+
+        return notFullOffers;
+        
+        
+    }
 }

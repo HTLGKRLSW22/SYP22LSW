@@ -13,4 +13,9 @@ public class StudentsController : ControllerBase
     public List<StudentWithOffersDto> GetStudentsWithOffers() {
         return _studentsService.GetStudentsWithOffers();
     }
+
+    [HttpGet("NotFullOffers")]
+    public List<OfferDto> GetNotFullOffers() {
+        return _studentsService.GetNotFullOffers();
+    }
 }

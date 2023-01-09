@@ -38,7 +38,7 @@ public class AuthenticationController : ControllerBase
         return Ok(new AuthenticationDto() {
             Id = teacher.TeacherId,
             IsAdmin = teacher.IsAdmin,
-            Role = "student",
+            Role = "teacher",
             Token = token,
             Username = teacher.Username
         });
@@ -55,7 +55,7 @@ public class AuthenticationController : ControllerBase
         //return Ok(new AuthenticationDto() {
         //    Id = admin.TeacherId,
         //    IsAdmin = admin.IsAdmin,
-        //    Role = "student",
+        //    Role = "admin",
         //    Token = token3,
         //    Username = admin.Username
         //});
@@ -69,7 +69,7 @@ public class AuthenticationController : ControllerBase
             {
                 new Claim(ClaimTypes.NameIdentifier, teacher.TeacherId.ToString()),
                 new Claim(ClaimTypes.Name, teacher.Username),
-                new Claim( ClaimTypes.Role,"student"),
+                new Claim(ClaimTypes.Role,"teacher"),
             }),
             Expires = DateTime.UtcNow.AddHours(4),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -78,16 +78,34 @@ public class AuthenticationController : ControllerBase
         string tokenString = tokenHandler.WriteToken(token);
         return tokenString;
     }
-    
-    //private string CreateTokenString(Student student) {
+
+    private string CreateTokenString(Student student) {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+        var tokenDescriptor = new SecurityTokenDescriptor {
+            Subject = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, student.StudentId.ToString()),
+                new Claim(ClaimTypes.Name, student.Username),
+                new Claim(ClaimTypes.Role,"student"),
+            }),
+            Expires = DateTime.UtcNow.AddHours(4),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        };
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        string tokenString = tokenHandler.WriteToken(token);
+        return tokenString;
+    }
+
+    //private string CreateTokenString(Teacher teacher) {
     //    var tokenHandler = new JwtSecurityTokenHandler();
     //    byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
     //    var tokenDescriptor = new SecurityTokenDescriptor {
     //        Subject = new ClaimsIdentity(new[]
     //        {
-    //            new Claim(ClaimTypes.NameIdentifier, student.StudentId.ToString()),
-    //            new Claim(ClaimTypes.Name, student.Username),
-    //            new Claim( ClaimTypes.Role,"student"),
+    //            new Claim(ClaimTypes.NameIdentifier, teacher.TeacherId.ToString()),
+    //            new Claim(ClaimTypes.Name, teacher.Username),
+    //            new Claim(ClaimTypes.Role,"admin"),
     //        }),
     //        Expires = DateTime.UtcNow.AddHours(4),
     //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
