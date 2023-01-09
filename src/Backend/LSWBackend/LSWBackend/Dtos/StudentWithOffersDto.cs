@@ -1,4 +1,4 @@
-﻿namespace LSWBackend.Dtos;
+namespace LSWBackend.Dtos;
 
 public class StudentWithOffersDto
 {
@@ -9,3 +9,4 @@ public class StudentWithOffersDto
     [Required] public bool IsFreigestellt { get; set; } = false;
     [Required] public List<OfferOfStudentDto> SelectedOffers { get; set; } = new();
 }
+

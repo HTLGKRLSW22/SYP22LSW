@@ -6,10 +6,10 @@ import { ApiModule, BASE_PATH } from './swagger';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
+import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './login/login.module';
 import { StudentModule } from './student/student.module';
 import { TeacherModule } from './teacher/teacher.module';
-import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,11 +19,11 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     HttpClientModule,
     ApiModule,
+    SharedModule,
     LoginModule,
     StudentModule,
     TeacherModule,
     AppRoutingModule,
-    SharedModule
   ],
   providers: [
     { provide: BASE_PATH, useValue: environment.apiRoot }

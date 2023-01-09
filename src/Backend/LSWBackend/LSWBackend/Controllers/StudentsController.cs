@@ -1,4 +1,4 @@
-﻿namespace LSWBackend.Controllers;
+namespace LSWBackend.Controllers;
 
 [Route("[controller]")]
 [ApiController]

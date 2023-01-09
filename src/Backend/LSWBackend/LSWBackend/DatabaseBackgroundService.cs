@@ -20,7 +20,10 @@ public class DatabaseBackgroundService : BackgroundService
             InitializeDb(db);
             Console.WriteLine("Database initialized...");
         }
-        return Task.Run(() => { }, stoppingToken);
+        return Task.Run(() => {
+
+            Thread.Sleep(3600000); //Sleep 1 Hour
+        }, stoppingToken);
     }
 
 
