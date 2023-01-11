@@ -19,7 +19,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { LoginDto } from '../model/loginDto';
+import { ExemptionDto } from '../model/exemptionDto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class FreistellungsService {
 
     protected basePath = 'http://localhost';
     public defaultHeaders = new HttpHeaders();
@@ -92,14 +92,14 @@ export class AuthenticationService {
     }
 
     /**
-     * @param loginDto 
+     * @param exemptionDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public authenticationLoginPost(loginDto?: LoginDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<Array<string>>;
-    public authenticationLoginPost(loginDto?: LoginDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<Array<string>>>;
-    public authenticationLoginPost(loginDto?: LoginDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<Array<string>>>;
-    public authenticationLoginPost(loginDto?: LoginDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
+    public freistellungsSetFreistellungPost(exemptionDto?: ExemptionDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<ExemptionDto>;
+    public freistellungsSetFreistellungPost(exemptionDto?: ExemptionDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<ExemptionDto>>;
+    public freistellungsSetFreistellungPost(exemptionDto?: ExemptionDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<ExemptionDto>>;
+    public freistellungsSetFreistellungPost(exemptionDto?: ExemptionDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -145,9 +145,9 @@ export class AuthenticationService {
             }
         }
 
-        let localVarPath = `/Authentication/login`;
-        return this.httpClient.post<Array<string>>(`${this.configuration.basePath}${localVarPath}`,
-            loginDto,
+        let localVarPath = `/Freistellungs/SetFreistellung`;
+        return this.httpClient.post<ExemptionDto>(`${this.configuration.basePath}${localVarPath}`,
+            exemptionDto,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

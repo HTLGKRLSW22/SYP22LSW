@@ -13,7 +13,7 @@ public class FreistellungsService
         _email = email;
     }
 
-    public bool SetFreistellung(FreistellungsDto freistellungsDto) {
+    public bool SetFreistellung(ExemptionDto freistellungsDto) {
 
 
         Student? student = _db.Students.Include(x => x.StudentOffers)
@@ -22,7 +22,7 @@ public class FreistellungsService
             .SingleOrDefault(x => x.StudentId == freistellungsDto.StudentId);
         Offer? freistellung = _db.Offers.Include(x => x.StudentOffers)
             .Include(x => x.OfferDates)
-            .SingleOrDefault(x => x.OfferId == freistellungsDto.FreistellungsId);
+            .SingleOrDefault(x => x.OfferId == freistellungsDto.OfferId);
         if (freistellung != null && freistellung.VisibleForStudents == 0) {
             if (student != null && student.StudentOffers.Count == 0) {
 

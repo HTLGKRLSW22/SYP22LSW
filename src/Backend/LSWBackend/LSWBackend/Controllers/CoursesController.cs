@@ -19,8 +19,8 @@ public class CoursesController : ControllerBase
         if (!_service.IsTeachersCourse(id, authorizedTeacherId)) return Unauthorized($"Teacher with id {authorizedTeacherId} is not the owner of course {id}!");
         if (id < 0) return BadRequest("Id or request body incorrect");
         var replyOffer = _service.EditCourse(id, offerPutDto);
-        return replyOffer.Beschreibung == "-1" ? (ActionResult<OfferDto>)NotFound("No offer with provided id found") :
-            replyOffer.Beschreibung == "-2" ? (ActionResult<OfferDto>)BadRequest("Foreign key constraint error") :
+        return replyOffer.Description == "-1" ? (ActionResult<OfferDto>)NotFound("No offer with provided id found") :
+            replyOffer.Description == "-2" ? (ActionResult<OfferDto>)BadRequest("Foreign key constraint error") :
             (ActionResult<OfferDto>)Ok(replyOffer);
     }
 

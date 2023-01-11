@@ -11,18 +11,16 @@
  */
 
 
-export interface OfferDto { 
+export interface CreateOfferDto { 
     title?: string | null;
     description?: string | null;
-    teachers?: Array<string> | null;
     price?: number | null;
     startDates?: Array<string> | null;
     endDates?: Array<string> | null;
-    currentCount?: number;
     maxCount?: number;
     minCount?: number;
     location?: string | null;
     meetingPoint?: string | null;
-    enrolled?: boolean | null;
+    clazzes?: Array<string> | null;
 }
 

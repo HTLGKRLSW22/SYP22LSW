@@ -1,6 +1,9 @@
-using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Security.Claims;
+
+using LSWBackend.Dtos;
+
+using Microsoft.AspNetCore.Authorization;
 
 namespace LSWBackend.Controllers;
 
@@ -13,19 +16,19 @@ public class OffersController : ControllerBase
     public OffersController(OffersService serv) => _service = serv;
 
     [HttpGet("GetOffers")]
-    public IEnumerable<OfferListDto> GetOffers() {
+    public IEnumerable<OfferSimpleDto> GetOffers() {
         Console.WriteLine("Get Offers -- Getting all Offers");
         return _service.GetAllOffers();
     }
 
     [HttpDelete("DeleteOffer")]
-    public ReplyDTO DeleteOffers(int id) {
+    public ActionResult DeleteOffers(int id) {
         Console.WriteLine("Delete Offer - Deleting the Offer with the Id: " + id);
-        return _service.DeleteOfferById(id);
+        return _service.DeleteOfferById(id) ? Ok() : BadRequest();
     }
 
     [HttpPut("UpdateOffer")]
-    public OfferListDto UpdateOffer([FromBody] OfferListDto offer) {
+    public OfferSimpleDto UpdateOffer([FromBody] OfferSimpleDto offer) {
         Console.WriteLine("Update Offer - Updating Offer with Id: " + offer.OfferId);
         return _service.UpdateOffer(offer);
     }
