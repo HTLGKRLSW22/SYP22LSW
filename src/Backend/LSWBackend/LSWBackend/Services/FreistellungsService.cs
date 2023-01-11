@@ -31,7 +31,7 @@ public class FreistellungsService
                     StudentId = student.StudentId,
                 });
                 _db.SaveChanges();
-                _email.SendAbcence($"{student.Username}@sus.htl-grieskirchen.at", freistellung.OfferDates[0].StartDate.Date.ToString());
+                _email.SendAbcence($"{student.Username}@sus.htl-grieskirchen.at", freistellung.OfferDates[0].StartDate.Date.ToShortDateString());
                 return true;
             }
             else if (student != null) {
@@ -50,7 +50,7 @@ public class FreistellungsService
                     StudentId = student.StudentId,
                 });
                 _db.SaveChanges();
-                _email.SendAbcence($"{student.Username}@sus.htl-grieskirchen.at", freistellung.OfferDates[0].StartDate.Date.ToString());
+                _email.SendAbcence($"{student.Username}@sus.htl-grieskirchen.at", freistellung.OfferDates[0].StartDate.Date.ToShortDateString());
                 return true;
             }
         }
