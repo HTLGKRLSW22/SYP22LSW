@@ -101,7 +101,7 @@ public class CoursesService
                 }.CopyPropertiesFrom(x))
                 .ToList();
         }
-        catch (Exception ex) {
+        catch (Exception) {
             return new List<OfferDto>();
         }
     }

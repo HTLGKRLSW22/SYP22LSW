@@ -1,9 +1,17 @@
 export * from './authentication.service';
 import { AuthenticationService } from './authentication.service';
+export * from './courses.service';
+import { CoursesService } from './courses.service';
+export * from './freistellungs.service';
+import { FreistellungsService } from './freistellungs.service';
+export * from './initialize.service';
+import { InitializeService } from './initialize.service';
 export * from './offers.service';
 import { OffersService } from './offers.service';
 export * from './students.service';
 import { StudentsService } from './students.service';
 export * from './testMail.service';
 import { TestMailService } from './testMail.service';
-export const APIS = [AuthenticationService, OffersService, StudentsService, TestMailService];
+export * from './waitingLists.service';
+import { WaitingListsService } from './waitingLists.service';
+export const APIS = [AuthenticationService, CoursesService, FreistellungsService, InitializeService, OffersService, StudentsService, TestMailService, WaitingListsService];

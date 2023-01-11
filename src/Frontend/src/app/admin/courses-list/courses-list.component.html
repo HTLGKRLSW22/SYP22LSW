@@ -12,9 +12,9 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of allCourses">
-                    <td>{{item.title}}</td>
-                    <td>{{dateConverter(item.offerDates!)}}</td>
-                    <td>{{item?.teacher?.lastName}}</td>
+                    <td>{{item.offerName}}</td>
+                    <td>{{item.startDate}} - {{item.endDate}}</td>
+                    <td>{{item.teacherName}}</td>
                     <td>
                         <button (click)="editCourse(item.offerId??0)" class="c-btn edit-course-button" style="border: none;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

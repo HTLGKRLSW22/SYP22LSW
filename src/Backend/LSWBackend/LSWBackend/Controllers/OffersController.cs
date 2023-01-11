@@ -1,8 +1,9 @@
+using System.Data;
+using System.Security.Claims;
+
 using LSWBackend.Dtos;
 
 using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.Security.Claims;
 
 namespace LSWBackend.Controllers;
 

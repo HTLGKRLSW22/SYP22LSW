@@ -3,9 +3,13 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 import { AuthenticationService } from './api/authentication.service';
+import { CoursesService } from './api/courses.service';
+import { FreistellungsService } from './api/freistellungs.service';
+import { InitializeService } from './api/initialize.service';
 import { OffersService } from './api/offers.service';
 import { StudentsService } from './api/students.service';
 import { TestMailService } from './api/testMail.service';
+import { WaitingListsService } from './api/waitingLists.service';
 
 @NgModule({
   imports:      [],

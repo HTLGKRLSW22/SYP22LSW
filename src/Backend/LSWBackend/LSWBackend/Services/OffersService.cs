@@ -32,7 +32,7 @@ public class OffersService
             _db.Offers.Remove(_db.Offers.Single(x => x.OfferId == id));
             _db.SaveChanges();
         }
-        catch (Exception e) {
+        catch (Exception) {
             return false;
         }
 
