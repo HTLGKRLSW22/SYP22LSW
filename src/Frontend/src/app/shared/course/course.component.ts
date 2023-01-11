@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { OfferDto } from 'src/app/models/offerDto';
+import { OfferDto } from 'src/app/swagger';
 
 @Component({
   selector: 'app-course',
@@ -13,7 +13,7 @@ export class CourseComponent implements OnInit {
   days: string[] = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
 
   ngOnInit(): void {
-    this.percentage = (this.offerDto?.currentCount??-1) / (this.offerDto?.maxCount??-1);
+    this.percentage = (this.offerDto?.currentCount ?? -1) / (this.offerDto?.maxCount ?? -1);
   }
 
   onBtnEnterCourseClick(): void {

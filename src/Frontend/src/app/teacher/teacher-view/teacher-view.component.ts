@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OfferDto } from 'src/app/models/offerDto';
+import { OfferDto } from 'src/app/swagger';
 
 @Component({
   selector: 'app-teacher-view',
