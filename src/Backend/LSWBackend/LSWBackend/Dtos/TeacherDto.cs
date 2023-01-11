@@ -1,7 +1,7 @@
 ﻿namespace LSWBackend.Dtos;
 
-public class LehrerDto
+public class TeacherDto
 {
     public string Name { get; set; } = null!;
-    public int CourseStatus { get; set; }
+    public int OfferStatus { get; set; }
 }

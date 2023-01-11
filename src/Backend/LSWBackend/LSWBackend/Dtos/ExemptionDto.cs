@@ -1,7 +1,7 @@
 ﻿namespace LSWBackend.Dtos;
 
-public class FreistellungenDto
+public class ExemptionDto
 {
     public int StudentId { get; set; }
-    public int CourseId { get; set; }
+    public int OfferId { get; set; }
 }

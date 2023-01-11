@@ -12,8 +12,8 @@ public class FreistellungsController : ControllerBase
     public FreistellungsController(FreistellungsService freistellungsService) => _freistellungsService = freistellungsService;
 
     [HttpPost("[action]")]
-    public ActionResult<FreistellungsDto> SetFreistellung([FromBody] FreistellungsDto freistellungsDto) {
+    public ActionResult<ExemptionDto> SetFreistellung([FromBody] ExemptionDto freistellungsDto) {
         bool functioned = _freistellungsService.SetFreistellung(freistellungsDto);
-        return !functioned ? (ActionResult<FreistellungsDto>)BadRequest("") : (ActionResult<FreistellungsDto>)freistellungsDto;
+        return !functioned ? (ActionResult<ExemptionDto>)BadRequest("") : (ActionResult<ExemptionDto>)freistellungsDto;
     }
 }

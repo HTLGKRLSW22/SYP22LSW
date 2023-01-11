@@ -91,4 +91,4 @@ Admin/Lehrer_Edit_Course
 	- Put mit CreateOfferDto
 	
 Freistellungen 
-	- ExemptionDto
+	- FreistellungenDto

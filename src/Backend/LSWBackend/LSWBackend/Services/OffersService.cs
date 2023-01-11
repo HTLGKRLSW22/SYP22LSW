@@ -14,42 +14,39 @@ public class OffersService
         _emailService = service;
     }
 
-    public IEnumerable<OfferListDto> GetAllOffers() {
-        return _db.Offers.Include(x => x.Teacher).Include(y => y.OfferDates).Select(x => new OfferListDto {
-            OfferId = x.OfferId,
-            OfferDates = x.OfferDates.Select(y => new OfferDateDto().CopyPropertiesFrom(y)).ToList(),
-            Title = x.Title,
-            TeacherFirstname = x.Teacher!.FirstName,
-            TeacherLastname = x.Teacher!.LastName,
-        }).ToList();
+    public IEnumerable<OfferSimpleDto> GetAllOffers() {
+        return _db.Offers
+            .Include(x => x.Teacher)
+            .Include(y => y.OfferDates)
+            .Select(x => new OfferSimpleDto {
+                OfferId = x.OfferId,
+                StartDate = x.OfferDates.Select(y => new OfferDateDto().CopyPropertiesFrom(y)).ToList()[0].StartDate.ToString(),
+                EndDate = x.OfferDates.Select(y => new OfferDateDto().CopyPropertiesFrom(y)).ToList()[0].EndDate.ToString(),
+                OfferName = x.Title,
+                TeacherName = $"{x.Teacher!.FirstName} {x.Teacher!.LastName}"
+            }).ToList();
     }
 
-    public ReplyDTO DeleteOfferById(int id) {
-        var reply = new ReplyDTO {
-            IsOK = true,
-            ErrorMessage = ""
-        };
-
+    public bool DeleteOfferById(int id) {
         try {
             _db.Offers.Remove(_db.Offers.Single(x => x.OfferId == id));
             _db.SaveChanges();
         }
         catch (Exception e) {
-            reply.IsOK = false;
-            reply.ErrorMessage = e.Message;
+            return false;
         }
 
-        return reply;
+        return true;
     }
 
-    public OfferListDto UpdateOffer(OfferListDto dto) {
+    public OfferSimpleDto UpdateOffer(OfferSimpleDto dto) {
         var offer = _db.Offers.Single(x => x.OfferId == dto.OfferId);
         offer = new Offer().CopyPropertiesFrom(dto);
         _db.SaveChanges();
         return dto;
     }
 
-    public bool CheckOfferFull(OfferListDto dto) {
+    public bool CheckOfferFull(OfferSimpleDto dto) {
         bool reply = false;
         int studentNum = _db.StudentOffers.Select(x => x.OfferId).Where(x => dto.OfferId == x).Sum();
         int minNum = _db.Offers.Single(x => x.OfferId == dto.OfferId).MinStudents;
